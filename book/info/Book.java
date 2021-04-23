@@ -33,16 +33,20 @@ public class Book {
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
-	
-	
 	public Book(String title, String author, String category, String publisher) {
-		super();
 		this.title = title;
 		this.author = author;
 		this.category = category;
 		this.publisher = publisher;
 	}
-	
-	
-
+	public Book(String title, String author, String category) {
+		this.title = title;
+		this.author = author;
+		this.category = category;
+		this.publisher = publisher;
+	}
+	public Book(String title, String author) {
+		this.title = title;
+		this.author = author;
+	}
 }
