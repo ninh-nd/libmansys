@@ -11,4 +11,11 @@ public class Person {
 
 	private String address;
 
+	public Person(String name, String email, String phoneNumber, String address) {
+		this.name = name;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+	}
+
 }
