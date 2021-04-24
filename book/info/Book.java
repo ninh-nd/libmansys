@@ -1,14 +1,12 @@
 package book.info;
 
 public class Book {
+	private int bookID;
 	private String title;
-	
 	private String author;
-	
 	private String category;
-	
 	private String publisher;
-	
+	static int idCounter = -1;
 	public String getTitle() {
 		return title;
 	}
@@ -33,18 +31,21 @@ public class Book {
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
-	public Book(String title, String author, String category, String publisher) {
+	public Book(int bookID, String title, String author, String category, String publisher) {
+		this.bookID = idCounter++;
 		this.title = title;
 		this.author = author;
 		this.category = category;
 		this.publisher = publisher;
 	}
-	public Book(String title, String author, String category) {
+	public Book(int bookID, String title, String author, String category) {
+		this.bookID = idCounter++;
 		this.title = title;
 		this.author = author;
 		this.category = category;
 	}
-	public Book(String title, String author) {
+	public Book(int bookID, String title, String author) {
+		this.bookID = idCounter++;
 		this.title = title;
 		this.author = author;
 	}
