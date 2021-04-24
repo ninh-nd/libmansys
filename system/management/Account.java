@@ -5,14 +5,14 @@ import system.info.Person;
 
 public class Account {
 
-	private String id;
+	private String username;
 
 	private String password;
 
 	private Person info;
-
+	
 	public void logIn() {
-
+		
 	}
 
 	public void logOut() {
