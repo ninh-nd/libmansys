@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -12,15 +14,49 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import java.sql.*;
 
 public class Login {
-
+	private final String url = "jdbc:postgresql://localhost/Library";
+	private final String user = "postgres";
+	private final String password = "123456";
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JButton exitButton;
 	private JLabel loginMenuLabel;
+	/**
+	 * Establish connection to the database
+	 */
+	public Connection connect() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
 
+        return conn;
+    }
+	/**
+	 * Check username and password from database
+	 */
+	private void checkLogin(String username, String password) {
+		String sql = "SELECT * from users WHERE username='" + username + "' and password='" + password + "'";
+		 try (Connection conn = connect();
+	                Statement stmt = conn.createStatement();
+	                ResultSet rs = stmt.executeQuery(sql)) {
+		        if (username != null && password != null) {
+		            if (rs.next()) {
+		               JOptionPane.showMessageDialog(null, "Login Successfully");
+		            } else {
+		            	JOptionPane.showMessageDialog(null, "Wrong username/password", "Login Error", JOptionPane.ERROR_MESSAGE);
+		            }
+		        }
+		    } catch (SQLException err) {
+		    	 System.out.println(err.getMessage());
+		    }
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -29,6 +65,7 @@ public class Login {
 			public void run() {
 				try {
 					Login window = new Login();
+					window.connect();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,12 +112,18 @@ public class Login {
 			public void actionPerformed(ActionEvent e) {
 				String username = textField.getText();
 				String password = passwordField.getText();
+				checkLogin(username, password);
 			}
 		});
 		loginButton.setBounds(81, 197, 89, 23);
 		frame.getContentPane().add(loginButton);
 		
 		exitButton = new JButton("Exit");
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		exitButton.setBounds(268, 197, 89, 23);
 		frame.getContentPane().add(exitButton);
 		
