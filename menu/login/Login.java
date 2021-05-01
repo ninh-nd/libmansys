@@ -17,9 +17,9 @@ import javax.swing.SwingConstants;
 import java.sql.*;
 
 public class Login {
-	private final String url = "jdbc:postgresql://localhost/Library";
-	private final String user = "postgres";
-	private final String password = "123456";
+	private static final String url = "jdbc:postgresql://localhost/Library";
+	private static final String user = "postgres";
+	private static final String password = "123456";
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
