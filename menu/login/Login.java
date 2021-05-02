@@ -14,36 +14,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import menu.DatabaseManagement;
+
 import java.sql.*;
 
 public class Login {
-	private static final String url = "jdbc:postgresql://localhost/Library";
-	private static final String user = "postgres";
-	private static final String password = "123456";
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JButton exitButton;
 	private JLabel loginMenuLabel;
-	/**
-	 * Establish connection to the database
-	 */
-	public Connection connect() {
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return conn;
-    }
+	private DatabaseManagement db = new DatabaseManagement();
 	/**
 	 * Check username and password from database
 	 */
 	private void checkLogin(String username, String password) {
 		String sql = "SELECT * from users WHERE username='" + username + "' and password='" + password + "'";
-		 try (Connection conn = connect();
+		 try (Connection conn = db.connect();
 	                Statement stmt = conn.createStatement();
 	                ResultSet rs = stmt.executeQuery(sql)) {
 		        if (username != null && password != null) {
@@ -65,7 +53,7 @@ public class Login {
 			public void run() {
 				try {
 					Login window = new Login();
-					window.connect();
+					window.db.connect();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
