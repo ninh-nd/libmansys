@@ -30,21 +30,24 @@ public class Login {
 	 * Check username and password from database
 	 */
 	private void checkLogin(String username, String password) {
-		String sql = "SELECT * from users WHERE username='" + username + "' and password='" + password + "'";
-		 try (Connection conn = db.connect();
-	                Statement stmt = conn.createStatement();
-	                ResultSet rs = stmt.executeQuery(sql)) {
-		        if (username != null && password != null) {
-		            if (rs.next()) {
-		               JOptionPane.showMessageDialog(null, "Login Successfully");
-		            } else {
-		            	JOptionPane.showMessageDialog(null, "Wrong username/password", "Login Error", JOptionPane.ERROR_MESSAGE);
-		            }
-		        }
-		    } catch (SQLException err) {
-		    	 System.out.println(err.getMessage());
-		    }
-	}
+        String sql = "SELECT * from users WHERE username= ? and password= ? ";
+        try  {
+            Connection conn = db.connect();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1,username);
+            stmt.setString(2,password);
+            ResultSet rs = stmt.executeQuery();
+            if (username != null && password != null) {
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(null, "Login Successfully");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Wrong username/password", "Login Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (SQLException err) {
+            System.out.println(err.getMessage());
+        }
+    }
 	/**
 	 * Launch the application.
 	 */
