@@ -1,7 +1,7 @@
 package management;
 import java.util.*;
 
-import info.Person;
+import system.info.Person;
 
 
 public class Account extends Person{
@@ -28,12 +28,6 @@ public class Account extends Person{
 
 	}
 	
-	public void addAcc(Account account) {
-		if(Account.contains(account))
-			return ;
-		else 
-			Account.add(account);		
-	}
 	public void createNewAccount() {
 		
 		
