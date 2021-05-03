@@ -64,7 +64,11 @@ public class Register {
                 	JOptionPane.showMessageDialog(null, "Password does not match", null, JOptionPane.ERROR_MESSAGE);
                 	return false;
                 }
+                else {
+                	JOptionPane.showMessageDialog(null, "Blank field", null, JOptionPane.ERROR_MESSAGE);
+                	return false;
                 }
+            }
             return true;
     }
     /**
