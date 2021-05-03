@@ -7,6 +7,9 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import menu.login.Login;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.BoxLayout;
@@ -57,20 +60,23 @@ public class MainMenu {
 		frame.getContentPane().add(title);
 		
 		JButton loginButton = new JButton("Login");
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Login().main(null);
+			}
+		});
 		loginButton.setBounds(142, 180, 152, 47);
 		frame.getContentPane().add(loginButton);
 		
 		JButton newAccountButton = new JButton("Create new account");
-		newAccountButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		
 		newAccountButton.setBounds(142, 270, 152, 47);
 		frame.getContentPane().add(newAccountButton);
 		
 		JButton exitButton = new JButton("Exit");
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
 			}
 		});
 		exitButton.setBounds(142, 360, 152, 47);
