@@ -56,7 +56,7 @@ public class Register {
      * Check confirm password
      */
     private boolean confirmPassword(String password, String confirmPassword) {
-            if (password != null && confirmPassword != null) {
+            if ((password != null) || (confirmPassword != null)) {
                 /**
                  * Check confirmed password
                  */
