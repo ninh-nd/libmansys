@@ -22,6 +22,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.Box;
+import java.awt.Component;
+import javax.swing.JLayeredPane;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import javax.swing.border.LineBorder;
+import java.awt.Cursor;
+import java.awt.CardLayout;
+import javax.swing.BoxLayout;
+import javax.swing.SpringLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class Register {
 
@@ -32,12 +52,15 @@ public class Register {
 	private JPasswordField confirmpasswordField;
 	private JButton confirmButton;
 	private DatabaseManagement db = new DatabaseManagement();
-    /**
-     * Check for duplicate username
-     */
+	private JLayeredPane confirmPane;
+	private JLayeredPane formPane;
+
+	/**
+	 * Check for duplicate username
+	 */
 	private boolean duplicateUser(String username) {
-		try (Connection conn = db.connect();) {
-			if (username != null) {
+		if (!username.trim().isEmpty()) {
+			try (Connection conn = db.connect();) {
 				String sql = "SELECT username FROM users WHERE (username = ?)";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setString(1, username);
@@ -46,37 +69,34 @@ public class Register {
 					JOptionPane.showMessageDialog(null, "Duplicate username", null, JOptionPane.ERROR_MESSAGE);
 					return false;
 				}
+			} catch (SQLException err) {
+				System.out.println(err.getMessage());
 			}
-		} catch (SQLException err) {
-			System.out.println(err.getMessage());
-		}
-		return true;
+			return true;
+		} else
+			return false;
 	}
-    /**
-     * Check confirm password
-     */
-    private boolean confirmPassword(String password, String confirmPassword) {
-            if ((password != null) || (confirmPassword != null)) {
-                /**
-                 * Check confirmed password
-                 */
-                if (!password.equals(confirmPassword)) {
-                	JOptionPane.showMessageDialog(null, "Password does not match", null, JOptionPane.ERROR_MESSAGE);
-                	return false;
-                }
-                else {
-                	JOptionPane.showMessageDialog(null, "Blank field", null, JOptionPane.ERROR_MESSAGE);
-                	return false;
-                }
-            }
-            return true;
-    }
-    /**
-     * Check duplicate email
-     */
+
+	/**
+	 * Check confirm password
+	 */
+	private boolean confirmPassword(String password, String confirmPassword) {
+		if (!password.isEmpty() && !confirmPassword.isEmpty()) {
+			if (!password.equals(confirmPassword)) {
+				JOptionPane.showMessageDialog(null, "Password does not match", null, JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			return true;
+		} else
+			return false;
+	}
+
+	/**
+	 * Check duplicate email
+	 */
 	private boolean duplicateEmail(String email) {
-		try (Connection conn = db.connect();) {
-			if (email != null) {
+		if (!email.trim().isEmpty()) {
+			try (Connection conn = db.connect();) {
 				String sql = "SELECT email FROM users WHERE (email = ?)";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setString(1, email);
@@ -85,12 +105,36 @@ public class Register {
 					JOptionPane.showMessageDialog(null, "Duplicate email", null, JOptionPane.ERROR_MESSAGE);
 					return false;
 				}
+			} catch (SQLException err) {
+				System.out.println(err.getMessage());
 			}
-		} catch (SQLException err) {
-			System.out.println(err.getMessage());
-		}
-		return true;
+			return true;
+		} else
+			return false;
 	}
+
+	private void registration(String username, String email, String password, String confirmPassword) {
+		if (username.trim().isEmpty() || email.trim().isEmpty() || password.trim().isEmpty()
+				|| confirmPassword.trim().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Blank field", null, JOptionPane.ERROR_MESSAGE);
+		} else {
+			if (duplicateUser(username) && duplicateEmail(email) && confirmPassword(password, confirmPassword)) {
+				try {
+					String sql = "INSERT INTO users (username,email,password) VALUES (?,?,?)";
+					Connection conn = db.connect();
+					PreparedStatement stmt = conn.prepareStatement(sql);
+					stmt.setString(1, username);
+					stmt.setString(2, email);
+					stmt.setString(3, password);
+					stmt.executeUpdate();
+					JOptionPane.showMessageDialog(null, "Register successfully", null, JOptionPane.PLAIN_MESSAGE);
+				} catch (SQLException err) {
+					System.out.println(err.getMessage());
+				}
+			}
+		}
+	}
+
 	/**
 	 * Launch the application.
 	 */
@@ -122,92 +166,76 @@ public class Register {
 		frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 13));
 		frame.setBounds(100, 100, 451, 556);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{149, 221, 0};
-		gridBagLayout.rowHeights = new int[]{155, 30, 30, 30, 30, 30, 30, 30, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		frame.getContentPane().setLayout(gridBagLayout);
-		
-		JLabel usernameTitle = new JLabel("Username");
-		usernameTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		usernameTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_usernameTitle = new GridBagConstraints();
-		gbc_usernameTitle.insets = new Insets(0, 0, 5, 5);
-		gbc_usernameTitle.gridx = 0;
-		gbc_usernameTitle.gridy = 1;
-		frame.getContentPane().add(usernameTitle, gbc_usernameTitle);
-		
-		usernameField = new JTextField();
-		GridBagConstraints gbc_usernameField = new GridBagConstraints();
-		gbc_usernameField.fill = GridBagConstraints.BOTH;
-		gbc_usernameField.insets = new Insets(0, 0, 5, 0);
-		gbc_usernameField.gridx = 1;
-		gbc_usernameField.gridy = 1;
-		frame.getContentPane().add(usernameField, gbc_usernameField);
-		usernameField.setColumns(10);
-		
-		JLabel emailTitle = new JLabel("Email");
-		emailTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		emailTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_emailTitle = new GridBagConstraints();
-		gbc_emailTitle.insets = new Insets(0, 0, 5, 5);
-		gbc_emailTitle.gridx = 0;
-		gbc_emailTitle.gridy = 3;
-		frame.getContentPane().add(emailTitle, gbc_emailTitle);
-		
-		emailField = new JTextField();
-		emailField.setColumns(10);
-		GridBagConstraints gbc_emailField = new GridBagConstraints();
-		gbc_emailField.fill = GridBagConstraints.BOTH;
-		gbc_emailField.insets = new Insets(0, 0, 5, 0);
-		gbc_emailField.gridx = 1;
-		gbc_emailField.gridy = 3;
-		frame.getContentPane().add(emailField, gbc_emailField);
-		
-		JLabel passwordTitle = new JLabel("Password");
-		passwordTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		passwordTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_passwordTitle = new GridBagConstraints();
-		gbc_passwordTitle.insets = new Insets(0, 0, 5, 5);
-		gbc_passwordTitle.gridx = 0;
-		gbc_passwordTitle.gridy = 5;
-		frame.getContentPane().add(passwordTitle, gbc_passwordTitle);
-		
-		passwordField = new JPasswordField();
-		GridBagConstraints gbc_passwordField = new GridBagConstraints();
-		gbc_passwordField.fill = GridBagConstraints.BOTH;
-		gbc_passwordField.insets = new Insets(0, 0, 5, 0);
-		gbc_passwordField.gridx = 1;
-		gbc_passwordField.gridy = 5;
-		frame.getContentPane().add(passwordField, gbc_passwordField);
-		
-		JLabel confirmpasswordTitle = new JLabel("Confirm password");
-		confirmpasswordTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		confirmpasswordTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_confirmpasswordTitle = new GridBagConstraints();
-		gbc_confirmpasswordTitle.insets = new Insets(0, 0, 5, 5);
-		gbc_confirmpasswordTitle.gridx = 0;
-		gbc_confirmpasswordTitle.gridy = 7;
-		frame.getContentPane().add(confirmpasswordTitle, gbc_confirmpasswordTitle);
-		
-		confirmpasswordField = new JPasswordField();
-		GridBagConstraints gbc_confirmpasswordField = new GridBagConstraints();
-		gbc_confirmpasswordField.insets = new Insets(0, 0, 5, 0);
-		gbc_confirmpasswordField.fill = GridBagConstraints.BOTH;
-		gbc_confirmpasswordField.gridx = 1;
-		gbc_confirmpasswordField.gridy = 7;
-		frame.getContentPane().add(confirmpasswordField, gbc_confirmpasswordField);
-		
+		frame.getContentPane().setLayout(null);
+
+		confirmPane = new JLayeredPane();
+		confirmPane.setBackground(Color.WHITE);
+		confirmPane.setBounds(10, 376, 415, 130);
+		frame.getContentPane().add(confirmPane);
+		confirmPane.setLayout(new BorderLayout(0, 0));
+
 		confirmButton = new JButton("Confirm");
+		confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		confirmButton.setMargin(new Insets(0, 0, 0, 0));
+		confirmButton.setBorderPainted(false);
+		confirmButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		confirmButton.setBorder(new LineBorder(Color.GREEN, 1, true));
+		confirmButton.setBackground(new Color(153, 255, 102));
+		confirmButton.setForeground(Color.BLACK);
+		confirmButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		confirmPane.add(confirmButton, BorderLayout.CENTER);
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				registration(usernameField.getText(), emailField.getText(), passwordField.getText(),
+						confirmpasswordField.getText());
 			}
 		});
-		GridBagConstraints gbc_confirmButton = new GridBagConstraints();
-		gbc_confirmButton.gridx = 1;
-		gbc_confirmButton.gridy = 9;
-		frame.getContentPane().add(confirmButton, gbc_confirmButton);
+
+		formPane = new JLayeredPane();
+		formPane.setBounds(10, 11, 415, 354);
+		frame.getContentPane().add(formPane);
+		formPane.setLayout(null);
+
+		JLabel usernameTitle = new JLabel("Username");
+		usernameTitle.setBounds(31, 58, 104, 16);
+		formPane.add(usernameTitle);
+		usernameTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		usernameTitle.setHorizontalAlignment(SwingConstants.CENTER);
+
+		usernameField = new JTextField();
+		usernameField.setBounds(166, 56, 224, 20);
+		formPane.add(usernameField);
+		usernameField.setColumns(10);
+
+		JLabel emailTitle = new JLabel("Email");
+		emailTitle.setBounds(31, 134, 104, 16);
+		formPane.add(emailTitle);
+		emailTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		emailTitle.setHorizontalAlignment(SwingConstants.CENTER);
+
+		emailField = new JTextField();
+		emailField.setBounds(166, 132, 224, 20);
+		formPane.add(emailField);
+		emailField.setColumns(10);
+
+		JLabel passwordTitle = new JLabel("Password");
+		passwordTitle.setBounds(31, 210, 104, 16);
+		formPane.add(passwordTitle);
+		passwordTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		passwordTitle.setHorizontalAlignment(SwingConstants.CENTER);
+
+		passwordField = new JPasswordField();
+		passwordField.setBounds(166, 208, 224, 20);
+		formPane.add(passwordField);
+
+		JLabel confirmpasswordTitle = new JLabel("Confirm password");
+		confirmpasswordTitle.setBounds(31, 286, 104, 16);
+		formPane.add(confirmpasswordTitle);
+		confirmpasswordTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		confirmpasswordTitle.setHorizontalAlignment(SwingConstants.CENTER);
+
+		confirmpasswordField = new JPasswordField();
+		confirmpasswordField.setBounds(166, 284, 224, 20);
+		formPane.add(confirmpasswordField);
 	}
 }
