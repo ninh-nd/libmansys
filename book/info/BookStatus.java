@@ -1,4 +1,4 @@
-package book.management;
+package book.info;
 public enum BookStatus {
 
 	Available,

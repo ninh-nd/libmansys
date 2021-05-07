@@ -1,23 +1,21 @@
 package book.info;
 
+import java.util.ArrayList;
+
 public class Book {
-	private int bookID;
+	private int book_id;
 	private String title;
-	private String author;
+	private ArrayList<String> author;
 	private String category;
 	private String publisher;
-	static int idCounter = -1;
+	private BookStatus bookstatus;
+	private int quantity;
+	
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	public String getAuthor() {
-		return author;
-	}
-	public void setAuthor(String author) {
-		this.author = author;
 	}
 	public String getCategory() {
 		return category;
@@ -25,27 +23,18 @@ public class Book {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public String getPublisher() {
-		return publisher;
-	}
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}
-	public Book(int bookID, String title, String author, String category, String publisher) {
-		this.bookID = idCounter++;
+	public Book(String title,  ArrayList<String> author, String category, String publisher) {
 		this.title = title;
 		this.author = author;
 		this.category = category;
 		this.publisher = publisher;
 	}
-	public Book(int bookID, String title, String author, String category) {
-		this.bookID = idCounter++;
+	public Book(String title,  ArrayList<String> author, String category) {
 		this.title = title;
 		this.author = author;
 		this.category = category;
 	}
-	public Book(int bookID, String title, String author) {
-		this.bookID = idCounter++;
+	public Book(String title,  ArrayList<String> author) {
 		this.title = title;
 		this.author = author;
 	}
