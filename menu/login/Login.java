@@ -20,7 +20,7 @@ import menu.DatabaseManagement;
 import java.sql.*;
 
 public class Login {
-	private JFrame frame;
+	private JFrame frmLogin;
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JButton exitButton;
@@ -57,7 +57,7 @@ public class Login {
 				try {
 					Login window = new Login();
 					window.db.connect();
-					window.frame.setVisible(true);
+					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -76,27 +76,28 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmLogin = new JFrame();
+		frmLogin.setTitle("Login");
+		frmLogin.setBounds(100, 100, 450, 300);
+		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmLogin.getContentPane().setLayout(null);
 		
 		JLabel userLabel = new JLabel("Username");
 		userLabel.setBounds(44, 92, 76, 14);
-		frame.getContentPane().add(userLabel);
+		frmLogin.getContentPane().add(userLabel);
 		
 		JLabel passwordLabel = new JLabel("Password");
 		passwordLabel.setBounds(44, 155, 76, 14);
-		frame.getContentPane().add(passwordLabel);
+		frmLogin.getContentPane().add(passwordLabel);
 		
 		textField = new JTextField();
 		textField.setBounds(130, 89, 227, 20);
-		frame.getContentPane().add(textField);
+		frmLogin.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(130, 152, 227, 20);
-		frame.getContentPane().add(passwordField);
+		frmLogin.getContentPane().add(passwordField);
 		
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
@@ -107,7 +108,7 @@ public class Login {
 			}
 		});
 		loginButton.setBounds(81, 197, 89, 23);
-		frame.getContentPane().add(loginButton);
+		frmLogin.getContentPane().add(loginButton);
 		
 		exitButton = new JButton("Exit");
 		exitButton.addActionListener(new ActionListener() {
@@ -116,12 +117,12 @@ public class Login {
 			}
 		});
 		exitButton.setBounds(268, 197, 89, 23);
-		frame.getContentPane().add(exitButton);
+		frmLogin.getContentPane().add(exitButton);
 		
 		loginMenuLabel = new JLabel("Library Management System");
 		loginMenuLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		loginMenuLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		loginMenuLabel.setBounds(50, 23, 324, 50);
-		frame.getContentPane().add(loginMenuLabel);
+		frmLogin.getContentPane().add(loginMenuLabel);
 	}
 }

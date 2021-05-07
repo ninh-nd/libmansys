@@ -45,7 +45,7 @@ import javax.swing.GroupLayout.Alignment;
 
 public class Register {
 
-	private JFrame frame;
+	private JFrame frmRegister;
 	private JTextField usernameField;
 	private JTextField emailField;
 	private JPasswordField passwordField;
@@ -143,7 +143,7 @@ public class Register {
 			public void run() {
 				try {
 					Register window = new Register();
-					window.frame.setVisible(true);
+					window.frmRegister.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -162,16 +162,17 @@ public class Register {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 13));
-		frame.setBounds(100, 100, 451, 556);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmRegister = new JFrame();
+		frmRegister.setTitle("Register");
+		frmRegister.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 13));
+		frmRegister.setBounds(100, 100, 451, 556);
+		frmRegister.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmRegister.getContentPane().setLayout(null);
 
 		confirmPane = new JLayeredPane();
 		confirmPane.setBackground(Color.WHITE);
 		confirmPane.setBounds(10, 376, 415, 130);
-		frame.getContentPane().add(confirmPane);
+		frmRegister.getContentPane().add(confirmPane);
 		confirmPane.setLayout(new BorderLayout(0, 0));
 
 		confirmButton = new JButton("Confirm");
@@ -193,7 +194,7 @@ public class Register {
 
 		formPane = new JLayeredPane();
 		formPane.setBounds(10, 11, 415, 354);
-		frame.getContentPane().add(formPane);
+		frmRegister.getContentPane().add(formPane);
 		formPane.setLayout(null);
 
 		JLabel usernameTitle = new JLabel("Username");
