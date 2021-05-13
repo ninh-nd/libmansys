@@ -25,7 +25,7 @@ public class Login {
 	private JPasswordField passwordField;
 	private JButton exitButton;
 	private JLabel loginMenuLabel;
-	private DatabaseManagement db = new DatabaseManagement();
+	private static DatabaseManagement db = new DatabaseManagement();
 	/**
 	 * Check username and password from database
 	 */
