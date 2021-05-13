@@ -61,6 +61,27 @@ public class Search {
 			}
 		}
 	}
+	
+	public static void searchAuthor(String author) {
+		if(!author.trim().isEmpty()) {
+			try(Connection conn	= db.connect();){
+				//String process: Convert the search string to all lowercase
+				author = author.toLowerCase();
+				String sql = "SELECT * FROM books WHERE LOWER(author) LIKE ?";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, "%" + author + "%");
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) {
+					//Printing results to the window
+				}
+				stmt.close();
+				
+			}catch (SQLException err) {
+				System.out.println(err.getMessage());
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		
 	}
