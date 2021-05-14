@@ -11,11 +11,13 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.Reader;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import menu.DatabaseManagement;
+import person.*;
 
 import java.sql.*;
 
@@ -25,6 +27,8 @@ public class Login {
 	private JPasswordField passwordField;
 	private JButton exitButton;
 	private JLabel loginMenuLabel;
+	public Librarian librarian;
+	public Reader reader;
 	private static DatabaseManagement db = new DatabaseManagement();
 	/**
 	 * Check username and password from database
@@ -40,6 +44,8 @@ public class Login {
             if (username != null && password != null) {
                 if (rs.next()) {
                     JOptionPane.showMessageDialog(null, "Login Successfully");
+                    if (username == "admin" && password == "admin") librarian = new Librarian(username, password);
+                    else reader = new Reader(username, password);
                 } else {
                     JOptionPane.showMessageDialog(null, "Wrong username/password", "Login Error", JOptionPane.ERROR_MESSAGE);
                 }

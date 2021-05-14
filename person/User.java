@@ -14,16 +14,16 @@ public class User {
 	private String phoneNumber;
 
 	private String address;
-
-	public User(String username, String password, String email) {
-		this.username = username;
-		this.password = password;
-		this.email = email;
+	
+	public User() {
+		
 	}
-
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
-
+	public User(String username, String password, String email) {
+		this(username, password);
+		this.email = email;
+	}
 }

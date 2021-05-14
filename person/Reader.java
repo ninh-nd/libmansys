@@ -5,4 +5,19 @@ public class Reader extends User{
 		super(username, password);
 	}
 	
+	private void reserveBook() {
+
+	}
+
+	private void rentBook() {
+		
+	}
+
+	private void returnBook() {
+
+	}
+
+	private void renewBook() {
+		
+	}
 }

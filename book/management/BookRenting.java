@@ -10,20 +10,5 @@ public class BookRenting {
 	private LocalDate rented_date;
 	private LocalDate due_date;
 	private LocalDate return_date;
-	public void reserveBook() {
-
-	}
-
-	public void rentBook() {
-
-	}
-
-	public void returnBook() {
-
-	}
-
-	public void renewBook() {
-
-	}
 
 }

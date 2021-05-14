@@ -10,7 +10,7 @@ public class Librarian extends User {
 		
 	}
 	private void removeBook(Book book) {
-		
+		//Set quantity to 0
 	}
 	private void updateBook(Book book) {
 		
