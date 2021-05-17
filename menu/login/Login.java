@@ -27,33 +27,39 @@ public class Login {
 	private JPasswordField passwordField;
 	private JButton exitButton;
 	private JLabel loginMenuLabel;
-	public Librarian librarian;
-	public Reader reader;
 	private static DatabaseManagement db = new DatabaseManagement();
+
 	/**
 	 * Check username and password from database
 	 */
 	private void checkLogin(String username, String password) {
-        String sql = "SELECT * from users WHERE username= ? and password= ? ";
-        try  {
-            Connection conn = db.connect();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1,username);
-            stmt.setString(2,password);
-            ResultSet rs = stmt.executeQuery();
-            if (username != null && password != null) {
-                if (rs.next()) {
-                    JOptionPane.showMessageDialog(null, "Login Successfully");
-                    if (username == "admin" && password == "admin") librarian = new Librarian(username, password);
-                    else reader = new Reader(username, password);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Wrong username/password", "Login Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        } catch (SQLException err) {
-            System.out.println(err.getMessage());
-        }
-    }
+		String sql = "SELECT * from users WHERE username= ? and password= ? ";
+		try {
+			Connection conn = db.connect();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, username);
+			stmt.setString(2, password);
+			ResultSet rs = stmt.executeQuery();
+			if (username != null && password != null) {
+				if (rs.next()) {
+					JOptionPane.showMessageDialog(null, "Login Successfully");
+					if (username == "admin") {
+						// Redirect to administration window
+
+					} else {
+						// Redirect to according user's window
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Wrong username/password", "Login Error",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+			}
+		} catch (SQLException err) {
+			System.out.println(err.getMessage());
+		}
+	}
+
 	/**
 	 * Launch the application.
 	 */
@@ -87,24 +93,24 @@ public class Login {
 		frmLogin.setBounds(100, 100, 450, 300);
 		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLogin.getContentPane().setLayout(null);
-		
+
 		JLabel userLabel = new JLabel("Username");
 		userLabel.setBounds(44, 92, 76, 14);
 		frmLogin.getContentPane().add(userLabel);
-		
+
 		JLabel passwordLabel = new JLabel("Password");
 		passwordLabel.setBounds(44, 155, 76, 14);
 		frmLogin.getContentPane().add(passwordLabel);
-		
+
 		textField = new JTextField();
 		textField.setBounds(130, 89, 227, 20);
 		frmLogin.getContentPane().add(textField);
 		textField.setColumns(10);
-		
+
 		passwordField = new JPasswordField();
 		passwordField.setBounds(130, 152, 227, 20);
 		frmLogin.getContentPane().add(passwordField);
-		
+
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -115,7 +121,7 @@ public class Login {
 		});
 		loginButton.setBounds(81, 197, 89, 23);
 		frmLogin.getContentPane().add(loginButton);
-		
+
 		exitButton = new JButton("Exit");
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -124,7 +130,7 @@ public class Login {
 		});
 		exitButton.setBounds(268, 197, 89, 23);
 		frmLogin.getContentPane().add(exitButton);
-		
+
 		loginMenuLabel = new JLabel("Library Management System");
 		loginMenuLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		loginMenuLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
