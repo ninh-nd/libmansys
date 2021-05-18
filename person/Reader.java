@@ -13,6 +13,8 @@ import net.proteanit.sql.DbUtils;
 import person.*;
 import menu.DatabaseManagement;
 
+import java.time.LocalDate;
+
 public class Reader extends User{
 	
 	private static DatabaseManagement db = new DatabaseManagement();
@@ -25,7 +27,11 @@ public class Reader extends User{
 
 	}
 
-	private void rentBook(int bookId, String username, Date rentDate, Date dueDate) {
+	private void rentBook(int bookId, String username, Date dueDate) {
+		
+		//get the rent date
+		Date rentDate = Date.valueOf(LocalDate.now());
+		
 		if (username.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Blank field", null, JOptionPane.ERROR_MESSAGE);			
 		}else {
@@ -50,7 +56,7 @@ public class Reader extends User{
 
 	}
 
-	private void renewBook(int BookId, String name, Date rentDate, Date dueDate) {
+	private void renewBook(int BookId, String name, Date dueDate) {
 		
 	}
 	
