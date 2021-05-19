@@ -16,7 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import menu.admin.admin_menu;
 import menu.DatabaseManagement;
 import person.*;
 
@@ -45,7 +44,7 @@ public class Login {
                 if (rs.next()) {
                     JOptionPane.showMessageDialog(null, "Login Successfully");
                     if (username == "admin") {
-                        admin_menu.ad_menu();// Redirect to administration window
+                        // Redirect to administration window
 
                     } else {
                         // Redirect to according user's window

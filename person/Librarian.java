@@ -24,10 +24,10 @@ public class Librarian extends User {
 	private void sendNotification(String message) {
 		
 	}
-	private boolean duplicateBook(String title) {
+	private static boolean duplicateBook(String title) {
 		if (!title.trim().isEmpty()) {
 			try (Connection conn = db.connect();) {
-				String sql = "SELECT title FROM books WHERE (username = ?)";
+				String sql = "SELECT title FROM books WHERE (title = ?)";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setString(1, title);
 				ResultSet rs = stmt.executeQuery();
@@ -43,7 +43,7 @@ public class Librarian extends User {
 			return false;
 	}
 	
-	private void addBook(String title, String author, String category, String publisher) {
+	public static void addBook(String title, String author, String category, String publisher) {
 				
 		if (title.trim().isEmpty() || author.trim().isEmpty() || category.trim().isEmpty()
 				|| publisher.trim().isEmpty()) {
@@ -51,13 +51,14 @@ public class Librarian extends User {
 		}else {
 			if (duplicateBook(title) ) {
 				try {
-					String sql = "INSERT INTO books (title,author,category,publisher) VALUES (?,?,?,?)";
+					String sql = "INSERT INTO books (title,author,category,publisher, book_status) VALUES (?,?,?,?, ?)";
 					Connection conn = db.connect();
 					PreparedStatement stmt = conn.prepareStatement(sql);
 					stmt.setString(1, title);
 					stmt.setString(2, author);
 					stmt.setString(3, category);
 					stmt.setString(4, publisher);
+					stmt.setString(5, "Available");
 					stmt.executeUpdate();
 					JOptionPane.showMessageDialog(null, "Book added", null, JOptionPane.PLAIN_MESSAGE);
 				} catch (SQLException err) {

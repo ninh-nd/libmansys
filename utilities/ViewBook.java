@@ -1,4 +1,4 @@
-package usermenu;
+package utilities;
 
 import net.proteanit.sql.DbUtils;
 import java.awt.EventQueue;
@@ -22,8 +22,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-import utilities.Search;
 
 public class ViewBook {
 
