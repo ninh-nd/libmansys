@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import menu.login.Login;
 import utilities.ViewBook;
 
 import java.awt.event.ActionListener;
@@ -59,6 +60,15 @@ public class AdminMenu {
 		frame.getContentPane().add(usersButton);
 		frame.getContentPane().add(rentedBooksButton);
 		frame.getContentPane().add(addBookButton);
+		
+		JButton logOutButton = new JButton("Log Out");
+		logOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				Login.main(null);
+			}
+		});
+		frame.getContentPane().add(logOutButton);
 		frame.setSize(600, 200);
 		frame.setVisible(true);// making the frame visible
 		frame.setLocationRelativeTo(null);

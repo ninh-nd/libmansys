@@ -62,7 +62,7 @@ public class MainMenu {
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Login().main(null);
+				Login.main(null);
 			}
 		});
 		loginButton.setBounds(142, 180, 152, 47);
