@@ -1,4 +1,4 @@
-package menu.login;
+package menu;
 
 import java.awt.EventQueue;
 
@@ -15,7 +15,6 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import adminmenu.AdminMenu;
-import menu.DatabaseManagement;
 
 import java.sql.*;
 

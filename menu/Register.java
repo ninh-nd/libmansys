@@ -1,4 +1,4 @@
-package menu.register;
+package menu;
 
 import java.awt.EventQueue;
 
@@ -6,9 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-
-import menu.DatabaseManagement;
-
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Font;
