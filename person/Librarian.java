@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import book.info.Book;
 import menu.DatabaseManagement;
+import utilities.ViewBook;
 
 public class Librarian extends User {
 	private static DatabaseManagement db = new DatabaseManagement();
@@ -43,7 +44,7 @@ public class Librarian extends User {
 			return false;
 	}
 	
-	public static void addBook(String title, String author, String category, String publisher) {
+	public static boolean addBook(String title, String author, String category, String publisher) {
 				
 		if (title.trim().isEmpty() || author.trim().isEmpty() || category.trim().isEmpty()
 				|| publisher.trim().isEmpty()) {
@@ -51,9 +52,12 @@ public class Librarian extends User {
 		}else {
 			if (duplicateBook(title) ) {
 				try {
+					String setMaxID = "SELECT setval(pg_get_serial_sequence('books', 'book_id'), max(book_id)) FROM books"; //Correct the ID counter
 					String sql = "INSERT INTO books (title,author,category,publisher, book_status) VALUES (?,?,?,?, ?)";
 					Connection conn = db.connect();
 					PreparedStatement stmt = conn.prepareStatement(sql);
+					PreparedStatement stmt2 = conn.prepareStatement(setMaxID);
+					stmt2.execute();
 					stmt.setString(1, title);
 					stmt.setString(2, author);
 					stmt.setString(3, category);
@@ -61,12 +65,13 @@ public class Librarian extends User {
 					stmt.setString(5, "Available");
 					stmt.executeUpdate();
 					JOptionPane.showMessageDialog(null, "Book added", null, JOptionPane.PLAIN_MESSAGE);
+					return true;
 				} catch (SQLException err) {
 					System.out.println(err.getMessage());
 				}
 			}
 		}
-		
+		return false;
 	}
 	
 	private static void removeBook(String title) {

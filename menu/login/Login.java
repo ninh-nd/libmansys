@@ -46,6 +46,7 @@ public class Login {
 					JOptionPane.showMessageDialog(null, "Login Successfully");
 					if (username.equals("admin")) {
 						AdminMenu.main(null);
+						frmLogin.dispose();
 					}
 					else {
 						//Redirect to user

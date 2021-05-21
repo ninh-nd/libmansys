@@ -8,6 +8,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
 import person.Librarian;
+import utilities.ViewBook;
 
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JTextField;
@@ -105,7 +106,10 @@ public class AddBook {
 		JButton submitButton = new JButton("Submit");
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Librarian.addBook(titleField.getText(), authorField.getText(), categoryField.getText(), publisherField.getText());
+				if(Librarian.addBook(titleField.getText(), authorField.getText(), categoryField.getText(), publisherField.getText())) {
+					frmAddBook.dispose();
+					ViewBook.main(null);
+				}
 			}
 		});
 		submitButton.setBounds(172, 215, 89, 23);

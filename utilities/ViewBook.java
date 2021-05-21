@@ -70,7 +70,7 @@ public class ViewBook {
 		frmBookList.setTitle("Book list");
 		frmBookList.setVisible(true);
 		frmBookList.setBounds(100, 100, 788, 377);
-		frmBookList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmBookList.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmBookList.getContentPane().setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
