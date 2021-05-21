@@ -6,19 +6,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.Reader;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import adminmenu.AdminMenu;
 import menu.DatabaseManagement;
-import person.*;
 
 import java.sql.*;
 
@@ -72,7 +69,7 @@ public class Login {
 			public void run() {
 				try {
 					Login window = new Login();
-					window.db.connect();
+					Login.db.connect();
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
