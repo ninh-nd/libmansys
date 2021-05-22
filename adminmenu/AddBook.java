@@ -1,4 +1,4 @@
-package adminmenu.addbook;
+package adminmenu;
 
 import java.awt.EventQueue;
 
@@ -7,16 +7,20 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
+import book.info.Book;
 import person.Librarian;
+import utilities.ViewBook;
 
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
 
 public class AddBook {
 
@@ -24,10 +28,10 @@ public class AddBook {
 	private JTextField titleField;
 	private JLabel authorLabel;
 	private JTextField authorField;
-	private JTextField categoryField;
 	private JLabel categoryLabel;
 	private JLabel publisherLabel;
 	private JTextField publisherField;
+	private JComboBox categoryField;
 
 	/**
 	 * Launch the application.
@@ -60,55 +64,68 @@ public class AddBook {
 		frmAddBook.setTitle("Add book");
 		frmAddBook.setBounds(100, 100, 450, 300);
 		frmAddBook.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmAddBook.getContentPane().setLayout(null);
+		frmAddBook.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("81px"),
+				FormSpecs.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("171px"),},
+			new RowSpec[] {
+				RowSpec.decode("31px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("31px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("34px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("34px"),
+				RowSpec.decode("20px"),
+				FormSpecs.UNRELATED_GAP_ROWSPEC,
+				RowSpec.decode("23px"),}));
 		
 		JLabel titleLabel = new JLabel("Title");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setBounds(10, 34, 81, 14);
-		frmAddBook.getContentPane().add(titleLabel);
+		frmAddBook.getContentPane().add(titleLabel, "2, 2, fill, center");
 		
 		titleField = new JTextField();
-		titleField.setBounds(101, 31, 160, 20);
-		frmAddBook.getContentPane().add(titleField);
+		frmAddBook.getContentPane().add(titleField, "4, 2, fill, top");
 		titleField.setColumns(10);
 		
 		authorLabel = new JLabel("Author");
 		authorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		authorLabel.setBounds(10, 85, 81, 14);
-		frmAddBook.getContentPane().add(authorLabel);
+		frmAddBook.getContentPane().add(authorLabel, "2, 4, fill, center");
 		
 		authorField = new JTextField();
-		authorField.setBounds(101, 82, 160, 20);
-		frmAddBook.getContentPane().add(authorField);
+		frmAddBook.getContentPane().add(authorField, "4, 4, fill, top");
 		authorField.setColumns(10);
 		
 		categoryLabel = new JLabel("Category");
 		categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		categoryLabel.setBounds(10, 136, 81, 14);
-		frmAddBook.getContentPane().add(categoryLabel);
+		frmAddBook.getContentPane().add(categoryLabel, "2, 6, center, top");
 		
-		categoryField = new JTextField();
-		categoryField.setBounds(101, 133, 160, 20);
-		frmAddBook.getContentPane().add(categoryField);
-		categoryField.setColumns(10);
+		Vector<String> categoryList = new Vector<String>();
+		for (int i=0; i<Book.categoryList.size(); i++) {
+			categoryList.add(Book.categoryList.get(i));
+		}
+		categoryField = new JComboBox<String>(categoryList);
+		frmAddBook.getContentPane().add(categoryField, "4, 6, fill, default");
+		
 		
 		publisherLabel = new JLabel("Publisher");
 		publisherLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		publisherLabel.setBounds(10, 187, 81, 14);
-		frmAddBook.getContentPane().add(publisherLabel);
+		frmAddBook.getContentPane().add(publisherLabel, "2, 8, fill, center");
 		
 		publisherField = new JTextField();
-		publisherField.setBounds(101, 184, 160, 20);
-		frmAddBook.getContentPane().add(publisherField);
+		frmAddBook.getContentPane().add(publisherField, "4, 8, fill, top");
 		publisherField.setColumns(10);
 		
 		JButton submitButton = new JButton("Submit");
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Librarian.addBook(titleField.getText(), authorField.getText(), categoryField.getText(), publisherField.getText());
+				if(Librarian.addBook(titleField.getText(), authorField.getText(), categoryField.getSelectedItem().toString(), publisherField.getText())) {
+					frmAddBook.dispose();
+					ViewBook.main(null);
+				}
 			}
 		});
-		submitButton.setBounds(172, 215, 89, 23);
-		frmAddBook.getContentPane().add(submitButton);
+		frmAddBook.getContentPane().add(submitButton, "4, 10, right, top");
 	}
 }

@@ -137,6 +137,6 @@ public class Reader extends User{
 		Reader reader = new Reader("an","andesu");
 		//reader.rentBook(book);
 		//reader.renewBook(book);
-		reader.returnBook(book);
+		//reader.returnBook(book);
 	}
 }

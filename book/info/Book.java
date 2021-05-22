@@ -1,6 +1,8 @@
 package book.info;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Vector;
 
 public class Book {
 	private int book_id;
@@ -9,12 +11,16 @@ public class Book {
 	private String category;
 	private String publisher;
 	private BookStatus book_status;
+<<<<<<< HEAD
 	private int quantity;
 	
 	
 	public int getBook_id() {
 		return book_id;
 	}
+=======
+	public static ArrayList<String> categoryList = new ArrayList<String>(Arrays.asList("Novel", "Action", "Comedy", "Education", "Drama", "Poetry", "Adventure", "Horror"));
+>>>>>>> c863c57b5daf32f72a6b2bdfa8596e8a937677dc
 	public String getTitle() {
 		return title;
 	}
@@ -39,12 +45,6 @@ public class Book {
 	public void setBook_status(BookStatus book_status) {
 		this.book_status = book_status;
 	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
 	public String getCategory() {
 		return category;
 	}
@@ -63,9 +63,12 @@ public class Book {
 		this(title, author, category);
 		this.publisher = publisher;
 	}
+<<<<<<< HEAD
 	public Book(int book_id,String title,  ArrayList<String> author, String category, String publisher) {
 		this(title, author, category);
 		this.book_id =book_id;
 		this.publisher = publisher;
 	}
+=======
+>>>>>>> c863c57b5daf32f72a6b2bdfa8596e8a937677dc
 }

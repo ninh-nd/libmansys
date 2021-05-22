@@ -1,4 +1,4 @@
-package menu.register;
+package menu;
 
 import java.awt.EventQueue;
 
@@ -6,14 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-
-import menu.DatabaseManagement;
-
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -22,7 +17,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
-import javax.swing.Box;
 import java.awt.Component;
 import javax.swing.JLayeredPane;
 import com.jgoodies.forms.layout.FormLayout;
@@ -31,17 +25,8 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.SystemColor;
-import javax.swing.UIManager;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
 import javax.swing.border.LineBorder;
 import java.awt.Cursor;
-import java.awt.CardLayout;
-import javax.swing.BoxLayout;
-import javax.swing.SpringLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 
 public class Register {
 
@@ -54,6 +39,11 @@ public class Register {
 	private DatabaseManagement db = new DatabaseManagement();
 	private JLayeredPane confirmPane;
 	private JLayeredPane formPane;
+	private JTextField addressField;
+	private JTextField phoneField;
+	private JLabel phoneLabel;
+	private JLabel nameLabel;
+	private JTextField nameField;
 
 	/**
 	 * Check for duplicate username
@@ -113,21 +103,25 @@ public class Register {
 			return false;
 	}
 
-	private void registration(String username, String email, String password, String confirmPassword) {
-		if (username.trim().isEmpty() || email.trim().isEmpty() || password.trim().isEmpty()
+	private void registration(String username, String name, String email, String address, String phone, String password, String confirmPassword) {
+		if (username.trim().isEmpty() || email.trim().isEmpty() || address.trim().isEmpty() || phone.trim().isEmpty() || password.trim().isEmpty()
 				|| confirmPassword.trim().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Blank field", null, JOptionPane.ERROR_MESSAGE);
 		} else {
 			if (duplicateUser(username) && duplicateEmail(email) && confirmPassword(password, confirmPassword)) {
 				try {
-					String sql = "INSERT INTO users (username,email,password) VALUES (?,?,?)";
+					String sql = "INSERT INTO users (username,password,name,email,address,phone) VALUES (?,?,?,?,?,?)";
 					Connection conn = db.connect();
 					PreparedStatement stmt = conn.prepareStatement(sql);
 					stmt.setString(1, username);
-					stmt.setString(2, email);
-					stmt.setString(3, password);
+					stmt.setString(2, password);
+					stmt.setString(3, name);
+					stmt.setString(4, email);
+					stmt.setString(5, address);
+					stmt.setString(6, phone);
 					stmt.executeUpdate();
 					JOptionPane.showMessageDialog(null, "Register successfully", null, JOptionPane.PLAIN_MESSAGE);
+					frmRegister.dispose();
 				} catch (SQLException err) {
 					System.out.println(err.getMessage());
 				}
@@ -171,7 +165,7 @@ public class Register {
 
 		confirmPane = new JLayeredPane();
 		confirmPane.setBackground(Color.WHITE);
-		confirmPane.setBounds(10, 376, 415, 130);
+		confirmPane.setBounds(10, 450, 415, 56);
 		frmRegister.getContentPane().add(confirmPane);
 		confirmPane.setLayout(new BorderLayout(0, 0));
 
@@ -187,56 +181,94 @@ public class Register {
 		confirmPane.add(confirmButton, BorderLayout.CENTER);
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				registration(usernameField.getText(), emailField.getText(), passwordField.getText(),
+				registration(usernameField.getText(), nameField.getText() ,emailField.getText(), addressField.getText(), phoneField.getText(), passwordField.getText(),
 						confirmpasswordField.getText());
 			}
 		});
 
 		formPane = new JLayeredPane();
-		formPane.setBounds(10, 11, 415, 354);
+		formPane.setBounds(10, 11, 415, 440);
 		frmRegister.getContentPane().add(formPane);
-		formPane.setLayout(null);
+		formPane.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("31px"),
+				ColumnSpec.decode("104px:grow"),
+				ColumnSpec.decode("31px"),
+				ColumnSpec.decode("224px:grow"),},
+			new RowSpec[] {
+				RowSpec.decode("max(30dlu;min)"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("max(30px;default)"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("max(30px;min)"),
+				FormSpecs.DEFAULT_ROWSPEC,
+				RowSpec.decode("max(30px;default)"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("max(30px;min)"),
+				FormSpecs.DEFAULT_ROWSPEC,
+				RowSpec.decode("max(30px;min)"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("max(30px;min)"),
+				RowSpec.decode("20px"),}));
 
 		JLabel usernameTitle = new JLabel("Username");
-		usernameTitle.setBounds(31, 58, 104, 16);
-		formPane.add(usernameTitle);
+		formPane.add(usernameTitle, "2, 2, fill, center");
 		usernameTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		usernameTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
 		usernameField = new JTextField();
-		usernameField.setBounds(166, 56, 224, 20);
-		formPane.add(usernameField);
+		formPane.add(usernameField, "4, 2, fill, top");
 		usernameField.setColumns(10);
 
 		JLabel emailTitle = new JLabel("Email");
-		emailTitle.setBounds(31, 134, 104, 16);
-		formPane.add(emailTitle);
+		formPane.add(emailTitle, "2, 4, fill, center");
 		emailTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		emailTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
 		emailField = new JTextField();
-		emailField.setBounds(166, 132, 224, 20);
-		formPane.add(emailField);
+		formPane.add(emailField, "4, 4, fill, top");
 		emailField.setColumns(10);
+		
+		nameLabel = new JLabel("Name");
+		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		formPane.add(nameLabel, "2, 6");
+		
+		nameField = new JTextField();
+		formPane.add(nameField, "4, 6, fill, default");
+		nameField.setColumns(10);
+		
+		addressField = new JTextField();
+		formPane.add(addressField, "4, 8, fill, default");
+		addressField.setColumns(10);
+		
+		phoneLabel = new JLabel("Phone number");
+		phoneLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		phoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		formPane.add(phoneLabel, "2, 10");
+		
+		phoneField = new JTextField();
+		phoneField.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		formPane.add(phoneField, "4, 10, fill, default");
+		phoneField.setColumns(10);
 
 		JLabel passwordTitle = new JLabel("Password");
-		passwordTitle.setBounds(31, 210, 104, 16);
-		formPane.add(passwordTitle);
+		formPane.add(passwordTitle, "2, 12, fill, center");
 		passwordTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		passwordTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(166, 208, 224, 20);
-		formPane.add(passwordField);
+		formPane.add(passwordField, "4, 12, fill, top");
 
 		JLabel confirmpasswordTitle = new JLabel("Confirm password");
-		confirmpasswordTitle.setBounds(31, 286, 104, 16);
-		formPane.add(confirmpasswordTitle);
+		formPane.add(confirmpasswordTitle, "2, 14, center, center");
 		confirmpasswordTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		confirmpasswordTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
 		confirmpasswordField = new JPasswordField();
-		confirmpasswordField.setBounds(166, 284, 224, 20);
-		formPane.add(confirmpasswordField);
+		formPane.add(confirmpasswordField, "4, 14, fill, top");
+		
+		JLabel addressLabel = new JLabel("Address");
+		addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		formPane.add(addressLabel, "2, 8, center, top");
 	}
 }
