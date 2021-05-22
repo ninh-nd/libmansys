@@ -11,6 +11,10 @@ public class Book {
 	private BookStatus book_status;
 	private int quantity;
 	
+	
+	public int getBook_id() {
+		return book_id;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -59,5 +63,9 @@ public class Book {
 		this(title, author, category);
 		this.publisher = publisher;
 	}
-	
+	public Book(int book_id,String title,  ArrayList<String> author, String category, String publisher) {
+		this(title, author, category);
+		this.book_id =book_id;
+		this.publisher = publisher;
+	}
 }
