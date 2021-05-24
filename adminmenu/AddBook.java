@@ -8,6 +8,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
 import book.info.Book;
+import menu.DatabaseManagement;
 import person.Librarian;
 import utilities.ViewBook;
 
@@ -16,6 +17,10 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
@@ -32,6 +37,7 @@ public class AddBook {
 	private JLabel publisherLabel;
 	private JTextField publisherField;
 	private JComboBox categoryField;
+	private static DatabaseManagement db = new DatabaseManagement();
 
 	/**
 	 * Launch the application.
@@ -63,7 +69,7 @@ public class AddBook {
 		frmAddBook = new JFrame();
 		frmAddBook.setTitle("Add book");
 		frmAddBook.setBounds(100, 100, 450, 300);
-		frmAddBook.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmAddBook.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmAddBook.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.UNRELATED_GAP_COLSPEC,
 				ColumnSpec.decode("81px"),
@@ -102,8 +108,17 @@ public class AddBook {
 		frmAddBook.getContentPane().add(categoryLabel, "2, 6, center, top");
 		
 		Vector<String> categoryList = new Vector<String>();
-		for (int i=0; i<Book.categoryList.size(); i++) {
-			categoryList.add(Book.categoryList.get(i));
+		//Getting category list
+		try {
+			String sql = "SELECT cat_name from category";
+			Connection conn = db.connect();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				categoryList.add(rs.getString("cat_name"));
+			}
+		} catch (SQLException err) {
+			System.out.println(err.getMessage());
 		}
 		categoryField = new JComboBox<String>(categoryList);
 		frmAddBook.getContentPane().add(categoryField, "4, 6, fill, default");

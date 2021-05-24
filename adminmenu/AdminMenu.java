@@ -76,6 +76,11 @@ public class AdminMenu {
 		});
 		
 		JButton addCategoryButton = new JButton("Add category");
+		addCategoryButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddCategory.main(null);
+			}
+		});
 		frame.getContentPane().add(addCategoryButton);
 		frame.getContentPane().add(logOutButton);
 		frame.setSize(600, 200);
