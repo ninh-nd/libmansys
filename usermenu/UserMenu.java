@@ -6,7 +6,7 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import menu.login.Login;
+import menu.Login;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

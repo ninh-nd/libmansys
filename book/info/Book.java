@@ -19,6 +19,9 @@ public class Book {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	public int getBook_id() {
+		return book_id;
+	}
 	public ArrayList<String> getAuthor() {
 		return author;
 	}
@@ -53,6 +56,13 @@ public class Book {
 	}
 	public Book(String title,  ArrayList<String> author, String category, String publisher) {
 		this(title, author, category);
+		this.publisher = publisher;
+	}
+	public Book(int book_id, String title, ArrayList<String> author, String category, String publisher) {
+		this.book_id = book_id;
+		this.title = title;
+		this.author = author;
+		this.category = category;
 		this.publisher = publisher;
 	}
 }
