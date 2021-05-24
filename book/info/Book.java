@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 public class Book {
 	private int book_id;
 	private String title;
@@ -11,7 +13,6 @@ public class Book {
 	private String category;
 	private String publisher;
 	private BookStatus book_status;
-	public static ArrayList<String> categoryList = new ArrayList<String>(Arrays.asList("Novel", "Action", "Comedy", "Education", "Drama", "Poetry", "Adventure", "Horror"));
 	public String getTitle() {
 		return title;
 	}
