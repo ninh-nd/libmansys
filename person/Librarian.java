@@ -78,10 +78,10 @@ public class Librarian extends User {
 		if(title.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Blank field", null, JOptionPane.ERROR_MESSAGE);
 		}else try {
-			String sql = "UPDATE books SET quantity = ? WHERE (title = ?)";
+			String sql = "UPDATE books SET book_status = ? WHERE (title = ?)";
 			Connection conn = db.connect();
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, 0);
+			stmt.setString(1, "Unavailable");
 			stmt.setString(2, title);
 			
 			stmt.executeUpdate();
@@ -133,7 +133,7 @@ public class Librarian extends User {
 	
 	
 	public static void main(String[] args) {
-		//removeBook("A Christmas Carol");
+		removeBook("fdsfsd");
 		
 		
 	}
