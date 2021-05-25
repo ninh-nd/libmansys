@@ -15,6 +15,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import adminmenu.AdminMenu;
+import person.User;
+import usermenu.UserMenu;
 
 import java.sql.*;
 
@@ -45,7 +47,15 @@ public class Login {
 						frmLogin.dispose();
 					}
 					else {
+						String getUserName = rs.getString(1);
+						String getName = rs.getString(3);
+						String getEmail = rs.getString(4);
+						String getAddress = rs.getString(5);
+						String getPhoneNumber = rs.getString(3);
+						
+						User user = new User(getUserName, getName, getEmail, getAddress, getPhoneNumber);
 						//Redirect to user
+						UserMenu.main(null);
 					}
 					return true;
 				} else {
