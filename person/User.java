@@ -27,8 +27,11 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
-	public User(String username, String password, String email) {
-		this(username, password);
+	public User(String username, String name, String email, String address, String phoneNumber) {
+		this.username = username;
 		this.email = email;
+		this.name = name;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
 	}
 }
