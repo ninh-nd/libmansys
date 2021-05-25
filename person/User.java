@@ -14,11 +14,7 @@ public class User {
 	private String phoneNumber;
 
 	private String address;
-	
-	public User() {
-		
-	}
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -27,6 +23,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
+
 	public User(String username, String name, String email, String address, String phoneNumber) {
 		this.username = username;
 		this.email = email;

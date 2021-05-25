@@ -42,11 +42,11 @@ public class Login {
 			if (username != null && password != null) {
 				if (rs.next()) {
 					JOptionPane.showMessageDialog(null, "Login Successfully");
-					if (username.equals("admin")) {
+					if (username.equals("admin")) { //Redirect to admin menu
 						AdminMenu.main(null);
 						frmLogin.dispose();
 					}
-					else {
+					else { //Redirect to user menu
 						String getUserName = rs.getString(1);
 						String getName = rs.getString(3);
 						String getEmail = rs.getString(4);
@@ -54,7 +54,7 @@ public class Login {
 						String getPhoneNumber = rs.getString(3);
 						
 						User user = new User(getUserName, getName, getEmail, getAddress, getPhoneNumber);
-						//Redirect to user
+						UserMenu.setUser(user);
 						UserMenu.main(null);
 					}
 					return true;

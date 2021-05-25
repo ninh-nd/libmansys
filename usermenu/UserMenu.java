@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import menu.Login;
+import person.User;
+import utilities.ViewBook;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -14,8 +16,11 @@ import java.awt.event.ActionEvent;
 public class UserMenu {
 
     private JFrame frame;
-
-    /**
+    private static User user;
+    public static void setUser(User user) {
+		UserMenu.user = user;
+	}
+	/**
      * Launch the application.
      */
     public static void main(String[] args) {
@@ -48,10 +53,15 @@ public class UserMenu {
         JButton viewButton = new JButton("View Books");
         viewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+                ViewBook.main(null);
             }
         });
         JButton rentBookButton = new JButton("Rent Book");
+        rentBookButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		RentBook.main(null);
+        	}
+        });
         JButton returnBookButton = new JButton("Return Book");
         JButton rentedBooksButton = new JButton("View Rented Books");
 

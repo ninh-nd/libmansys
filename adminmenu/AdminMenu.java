@@ -50,7 +50,7 @@ public class AdminMenu {
 		JButton viewButton = new JButton("View Books");
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ViewBook();
+				ViewBook.main(null);
 			}
 		});
 		JButton usersButton = new JButton("View Users");
