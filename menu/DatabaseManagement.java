@@ -11,7 +11,7 @@ public class DatabaseManagement {
 	/**
 	 * Establish connection to the database
 	 */
-	public Connection connect() {
+	public static Connection connect() {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, user, password);

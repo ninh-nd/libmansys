@@ -36,7 +36,6 @@ public class Register {
 	private JPasswordField passwordField;
 	private JPasswordField confirmpasswordField;
 	private JButton confirmButton;
-	private DatabaseManagement db = new DatabaseManagement();
 	private JLayeredPane confirmPane;
 	private JLayeredPane formPane;
 	private JTextField addressField;
@@ -50,7 +49,7 @@ public class Register {
 	 */
 	private boolean duplicateUser(String username) {
 		if (!username.trim().isEmpty()) {
-			try (Connection conn = db.connect();) {
+			try (Connection conn = DatabaseManagement.connect();) {
 				String sql = "SELECT username FROM users WHERE (username = ?)";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setString(1, username);
@@ -86,7 +85,7 @@ public class Register {
 	 */
 	private boolean duplicateEmail(String email) {
 		if (!email.trim().isEmpty()) {
-			try (Connection conn = db.connect();) {
+			try (Connection conn = DatabaseManagement.connect();) {
 				String sql = "SELECT email FROM users WHERE (email = ?)";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setString(1, email);
@@ -111,7 +110,7 @@ public class Register {
 			if (duplicateUser(username) && duplicateEmail(email) && confirmPassword(password, confirmPassword)) {
 				try {
 					String sql = "INSERT INTO users (username,password,name,email,address,phone) VALUES (?,?,?,?,?,?)";
-					Connection conn = db.connect();
+					Connection conn = DatabaseManagement.connect();
 					PreparedStatement stmt = conn.prepareStatement(sql);
 					stmt.setString(1, username);
 					stmt.setString(2, password);

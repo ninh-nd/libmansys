@@ -10,15 +10,17 @@ import javax.swing.JOptionPane;
 
 import book.info.Book;
 import menu.DatabaseManagement;
-import utilities.ViewBook;
 
 public class Librarian extends User {
-	private static DatabaseManagement db = new DatabaseManagement();
-	
 	public Librarian(String username, String password) {
 		super(username, password);
 	}
 	
+	public Librarian(String username, String name, String email, String address, String phoneNumber) {
+		super(username, name, email, address, phoneNumber);
+		// TODO Auto-generated constructor stub
+	}
+
 	private void updateBook(Book book) {
 		
 	}
@@ -27,7 +29,7 @@ public class Librarian extends User {
 	}
 	private static boolean duplicateBook(String title) {
 		if (!title.trim().isEmpty()) {
-			try (Connection conn = db.connect();) {
+			try (Connection conn = DatabaseManagement.connect();) {
 				String sql = "SELECT title FROM books WHERE (title = ?)";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setString(1, title);
@@ -54,7 +56,7 @@ public class Librarian extends User {
 				try {
 					String setMaxID = "SELECT setval(pg_get_serial_sequence('books', 'book_id'), max(book_id)) FROM books"; //Correct the ID counter
 					String sql = "INSERT INTO books (title,author,category,publisher, book_status) VALUES (?,?,?,?, ?)";
-					Connection conn = db.connect();
+					Connection conn = DatabaseManagement.connect();
 					PreparedStatement stmt = conn.prepareStatement(sql);
 					PreparedStatement stmt2 = conn.prepareStatement(setMaxID);
 					stmt2.execute();
@@ -79,7 +81,7 @@ public class Librarian extends User {
 			JOptionPane.showMessageDialog(null, "Blank field", null, JOptionPane.ERROR_MESSAGE);
 		}else try {
 			String sql = "UPDATE books SET book_status = ? WHERE (title = ?)";
-			Connection conn = db.connect();
+			Connection conn = DatabaseManagement.connect();
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, "Unavailable");
 			stmt.setString(2, title);
@@ -97,7 +99,7 @@ public class Librarian extends User {
 		}else {			
 				try {
 					String sql = "INSERT INTO renting (due_date) VALUES (?) WHERE book_id = ? AND username = ?";
-					Connection conn = db.connect();
+					Connection conn = DatabaseManagement.connect();
 					PreparedStatement stmt = conn.prepareStatement(sql);
 					stmt.setDate(1, dueDate);
 					stmt.setInt(2, book_id);
@@ -116,7 +118,7 @@ public class Librarian extends User {
 	private void viewIssuedBooks() {
 		try {
 			String sql = "SELECT * from renting";
-			Connection conn = db.connect();
+			Connection conn = DatabaseManagement.connect();
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {

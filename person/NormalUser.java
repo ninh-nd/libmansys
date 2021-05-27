@@ -9,17 +9,16 @@ import java.time.LocalDate;
 
 import javax.swing.JOptionPane;
 
-import book.info.Book;
 import menu.DatabaseManagement;
 
-public class Reader extends User{
-	private static DatabaseManagement db = new DatabaseManagement();
-	public Reader(String username, String password) {
-		super(username, password);
-	}
+public class NormalUser extends User {
 	
-	public void rentBook(int book_id) {
-		try(Connection conn = db.connect();){
+	public NormalUser(String username, String name, String email, String address, String phoneNumber) {
+		super(username, name, email, address, phoneNumber);
+	}
+
+	public static void rentBook(int book_id, User user) {
+		try(Connection conn = DatabaseManagement.connect();){
 			String sql = "SELECT book_status FROM books WHERE (book_id = ?)";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, book_id);
@@ -40,7 +39,7 @@ public class Reader extends User{
 					sql = "INSERT INTO renting (book_id,username,rented_date,due_date,is_extended) VALUES(?,?,?,?,'false')";
 					stmt = conn.prepareStatement(sql);
 					stmt.setInt(1, book_id);
-					stmt.setString(2, getUsername());
+					stmt.setString(2, user.getUsername());
 					stmt.setDate(3, rented_date);
 					stmt.setDate(4, due_date);
 					rows = stmt.executeUpdate();
@@ -50,13 +49,13 @@ public class Reader extends User{
 					sql = "INSERT INTO history (book_id,username,rented_date,return_date) VALUES(?,?,?,NULL)";
 					stmt = conn.prepareStatement(sql);
 					stmt.setInt(1, book_id);
-					stmt.setString(2, getUsername());
+					stmt.setString(2, user.getUsername());
 					stmt.setDate(3, rented_date);
 					rows = stmt.executeUpdate();
 					if(rows == 0) {
 						JOptionPane.showMessageDialog(null, "Cannot insert into database", null, JOptionPane.ERROR_MESSAGE);
 						return;}
-					JOptionPane.showMessageDialog(null, "Book is rented by "+getUsername(), null, JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Book is rented by "+ user.getUsername(), null, JOptionPane.PLAIN_MESSAGE);
 					break;
 				case "Rented":
 					sql = "SELECT rented_date,username FROM renting WHERE (book_id = ?)";
@@ -77,14 +76,14 @@ public class Reader extends User{
 		}
 	}
 
-	public void returnBook(int book_id) {
+	public static void returnBook(int book_id, User user) {
 		Date return_date = Date.valueOf(LocalDate.now());
-		try(Connection conn = db.connect();){
+		try(Connection conn = DatabaseManagement.connect();){
 			String sql = "UPDATE history SET return_date = ? WHERE (book_id = ? AND username = ? AND return_date IS NULL)";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setDate(1, return_date);
 			stmt.setInt(2, book_id);
-			stmt.setString(3, getUsername());
+			stmt.setString(3, user.getUsername());
 			int rows = stmt.executeUpdate();
 			if(rows == 0) {
 				JOptionPane.showMessageDialog(null, "Cannot update database", null, JOptionPane.ERROR_MESSAGE);
@@ -112,8 +111,8 @@ public class Reader extends User{
 
 	}
 
-	public void renewBook(int book_id) {
-		try(Connection conn = db.connect();){
+	public static void renewBook(int book_id) {
+		try(Connection conn = DatabaseManagement.connect();){
 			String sql = "SELECT due_date,is_extended FROM renting WHERE (book_id = ?)";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, book_id);
@@ -141,10 +140,6 @@ public class Reader extends User{
 		}
 	}
 	public static void main(String[] args) {
-		Reader reader = new Reader("an","andesu");
-		int book_id = 1;
-		reader.rentBook(book_id);
-		reader.renewBook(book_id);
-		reader.returnBook(book_id);
+
 	}
 }

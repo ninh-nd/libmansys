@@ -10,12 +10,13 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.Reader;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import adminmenu.AdminMenu;
-import person.User;
+import person.*;
 import usermenu.UserMenu;
 
 import java.sql.*;
@@ -26,15 +27,13 @@ public class Login {
 	private JPasswordField passwordField;
 	private JButton exitButton;
 	private JLabel loginMenuLabel;
-	private static DatabaseManagement db = new DatabaseManagement();
-
 	/**
 	 * Check username and password from database
 	 */
 	private boolean checkLogin(String username, String password) {
 		String sql = "SELECT * from users WHERE username= ? and password= ? ";
 		try {
-			Connection conn = db.connect();
+			Connection conn = DatabaseManagement.connect();
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			stmt.setString(2, password);
@@ -52,8 +51,7 @@ public class Login {
 						String getEmail = rs.getString(4);
 						String getAddress = rs.getString(5);
 						String getPhoneNumber = rs.getString(3);
-						
-						User user = new User(getUserName, getName, getEmail, getAddress, getPhoneNumber);
+						NormalUser user = new NormalUser(getUserName, getName, getEmail, getAddress, getPhoneNumber);
 						UserMenu.setUser(user);
 						UserMenu.main(null);
 					}
@@ -78,7 +76,6 @@ public class Login {
 			public void run() {
 				try {
 					Login window = new Login();
-					Login.db.connect();
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

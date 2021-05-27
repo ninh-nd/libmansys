@@ -8,11 +8,9 @@ import menu.DatabaseManagement;
 import net.proteanit.sql.DbUtils;
 
 public class Search {
-	private static DatabaseManagement db = new DatabaseManagement();
-
 	public static ResultSet searchTitle(String title) {
 		if (!title.trim().isEmpty()) {
-			try (Connection conn = db.connect();) {
+			try (Connection conn = DatabaseManagement.connect();) {
 				// String process: Convert the search string to all lowercase
 				title = title.toLowerCase();
 				String sql = "SELECT * FROM books WHERE LOWER(title) LIKE ?";
@@ -29,7 +27,7 @@ public class Search {
 
 	public static ResultSet searchCategory(String category) {
 		if (!category.trim().isEmpty()) {
-			try (Connection conn = db.connect();) {
+			try (Connection conn = DatabaseManagement.connect();) {
 				// String process: Convert the search string to all lowercase
 				category = category.toLowerCase();
 				String sql = "SELECT * FROM books WHERE LOWER(category) LIKE ?";
@@ -46,7 +44,7 @@ public class Search {
 
 	public static ResultSet searchPublisher(String publisher) {
 		if (!publisher.trim().isEmpty()) {
-			try (Connection conn = db.connect();) {
+			try (Connection conn = DatabaseManagement.connect();) {
 				// String process: Convert the search string to all lowercase
 				publisher = publisher.toLowerCase();
 				String sql = "SELECT * FROM books WHERE LOWER(publisher) LIKE ?";
@@ -63,7 +61,7 @@ public class Search {
 
 	public static ResultSet searchAuthor(String author) {
 		if (!author.trim().isEmpty()) {
-			try (Connection conn = db.connect();) {
+			try (Connection conn = DatabaseManagement.connect();) {
 				// String process: Convert the search string to all lowercase
 				author = author.toLowerCase();
 				String sql = "SELECT * FROM books WHERE LOWER(author) LIKE ?";
@@ -79,7 +77,7 @@ public class Search {
 	}
 
 	public static ResultSet showAllBook() {
-		try (Connection conn = db.connect();) {
+		try (Connection conn = DatabaseManagement.connect();) {
 			String sql = "SELECT * FROM books";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();

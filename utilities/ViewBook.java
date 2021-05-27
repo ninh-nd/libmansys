@@ -26,7 +26,6 @@ import java.awt.event.ActionEvent;
 public class ViewBook {
 
 	private JFrame frmBookList;
-	private static DatabaseManagement db = new DatabaseManagement();
 	private JTable table = new JTable();
 	private JTextField searchField;
 
@@ -50,9 +49,9 @@ public class ViewBook {
 	 * Create the application.
 	 */
 	public ViewBook() {
-		String sql = "SELECT * FROM books";
+		String sql = "SELECT * FROM books ORDER BY book_id";
 		try {
-			Connection conn = db.connect();
+			Connection conn = DatabaseManagement.connect();
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			table.setModel(DbUtils.resultSetToTableModel(rs));

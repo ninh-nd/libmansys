@@ -7,7 +7,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
-import book.info.Book;
 import menu.DatabaseManagement;
 import person.Librarian;
 import utilities.ViewBook;
@@ -23,7 +22,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 
@@ -36,9 +34,7 @@ public class AddBook {
 	private JLabel categoryLabel;
 	private JLabel publisherLabel;
 	private JTextField publisherField;
-	private JComboBox categoryField;
-	private static DatabaseManagement db = new DatabaseManagement();
-
+	private JComboBox<String> categoryField;
 	/**
 	 * Launch the application.
 	 */
@@ -111,7 +107,7 @@ public class AddBook {
 		//Getting category list
 		try {
 			String sql = "SELECT cat_name from category";
-			Connection conn = db.connect();
+			Connection conn = DatabaseManagement.connect();
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {

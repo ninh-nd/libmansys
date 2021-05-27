@@ -29,8 +29,6 @@ public class AddCategory extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField categoryField;
-	private static DatabaseManagement db = new DatabaseManagement();
-
 	/**
 	 * Launch the application.
 	 */
@@ -100,7 +98,7 @@ public class AddCategory extends JFrame {
 				if (!category.isBlank()) {
 					try {
 						String sql = "SELECT cat_name from category WHERE cat_name = ?";
-						Connection conn = db.connect();
+						Connection conn = DatabaseManagement.connect();
 						PreparedStatement stmt = conn.prepareStatement(sql);
 						stmt.setString(1, category);
 						ResultSet rs = stmt.executeQuery();

@@ -7,19 +7,21 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import menu.Login;
-import person.User;
+import person.NormalUser;
 import utilities.ViewBook;
 
 import java.awt.event.ActionListener;
+import java.io.Reader;
 import java.awt.event.ActionEvent;
 
 public class UserMenu {
 
-    private JFrame frame;
-    private static User user;
-    public static void setUser(User user) {
+    private JFrame frmUserFunctions;
+    protected static NormalUser user;
+	public static void setUser(NormalUser user) {
 		UserMenu.user = user;
 	}
+
 	/**
      * Launch the application.
      */
@@ -28,7 +30,7 @@ public class UserMenu {
             public void run() {
                 try {
                     UserMenu window = new UserMenu();
-                    window.frame.setVisible(true);
+                    window.frmUserFunctions.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -47,9 +49,10 @@ public class UserMenu {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        frame = new JFrame("Admin Functions");
-        frame.setBounds(100, 100, 450, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frmUserFunctions = new JFrame("Admin Functions");
+        frmUserFunctions.setTitle("User Functions");
+        frmUserFunctions.setBounds(100, 100, 450, 300);
+        frmUserFunctions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JButton viewButton = new JButton("View Books");
         viewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -65,24 +68,24 @@ public class UserMenu {
         JButton returnBookButton = new JButton("Return Book");
         JButton rentedBooksButton = new JButton("View Rented Books");
 
-        frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        frame.getContentPane().add(viewButton);
-        frame.getContentPane().add(rentBookButton);
-        frame.getContentPane().add(returnBookButton);
-        frame.getContentPane().add(rentedBooksButton);
+        frmUserFunctions.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        frmUserFunctions.getContentPane().add(viewButton);
+        frmUserFunctions.getContentPane().add(rentBookButton);
+        frmUserFunctions.getContentPane().add(returnBookButton);
+        frmUserFunctions.getContentPane().add(rentedBooksButton);
 
 
         JButton logOutButton = new JButton("Log Out");
         logOutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                frmUserFunctions.dispose();
                 Login.main(null);
             }
         });
-        frame.getContentPane().add(logOutButton);
-        frame.setSize(600, 200);
-        frame.setVisible(true);// making the frame visible
-        frame.setLocationRelativeTo(null);
+        frmUserFunctions.getContentPane().add(logOutButton);
+        frmUserFunctions.setSize(600, 200);
+        frmUserFunctions.setVisible(true);// making the frame visible
+        frmUserFunctions.setLocationRelativeTo(null);
     }
 
 }
