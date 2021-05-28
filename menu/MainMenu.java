@@ -80,4 +80,5 @@ public class MainMenu {
 		exitButton.setBounds(142, 360, 152, 47);
 		frame.getContentPane().add(exitButton);
 	}
+	//Test
 }
