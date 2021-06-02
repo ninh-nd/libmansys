@@ -11,18 +11,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 
 import menu.MainMenu;
+import net.proteanit.sql.DbUtils;
 import person.NormalUser;
 import utilities.ViewBook;
+import utilities.ViewHistory;
+import utilities.ViewRentedBook;
 
 public class AdminMenu {
 
 	private JFrame frmAdminFunctions;
 	protected static NormalUser user;
-	private JTable table;
-	private JTable table_1;
+	private JTable currentTable;
+	private JTable historyTable;
 
 
 	/**
@@ -67,9 +69,9 @@ public class AdminMenu {
 		scrollPane.setBounds(0, 48, 485, 173);
 		panel.add(scrollPane);
 
-		table = new JTable();
-		scrollPane.setViewportView(table);
-
+		currentTable = new JTable();
+		scrollPane.setViewportView(currentTable);
+		currentTable.setModel(DbUtils.resultSetToTableModel(ViewRentedBook.viewRentedBook()));
 		JLabel lblNewLabel = new JLabel("Current books borrowed:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel.setBounds(10, 11, 165, 26);
@@ -88,9 +90,9 @@ public class AdminMenu {
 		scrollPane_1.setBounds(0, 48, 485, 173);
 		panel_1.add(scrollPane_1);
 
-		table_1 = new JTable();
-		scrollPane_1.setViewportView(table_1);
-
+		historyTable = new JTable();
+		scrollPane_1.setViewportView(historyTable);
+		historyTable.setModel(DbUtils.resultSetToTableModel(ViewHistory.viewHistory()));
 		JLabel lblBookBorrowingsHistory = new JLabel("Book borrowing's history:");
 		lblBookBorrowingsHistory.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblBookBorrowingsHistory.setBounds(10, 11, 165, 26);
