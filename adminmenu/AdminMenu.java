@@ -1,20 +1,29 @@
 package adminmenu;
 
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 import menu.MainMenu;
+import person.NormalUser;
 import utilities.ViewBook;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class AdminMenu {
 
-	private JFrame frame;
+	private JFrame frmAdminFunctions;
+	protected static NormalUser user;
+	private JTable table;
+	private JTable table_1;
+
 
 	/**
 	 * Launch the application.
@@ -24,7 +33,7 @@ public class AdminMenu {
 			public void run() {
 				try {
 					AdminMenu window = new AdminMenu();
-					window.frame.setVisible(true);
+					window.frmAdminFunctions.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,48 +52,91 @@ public class AdminMenu {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Admin Functions");
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JButton viewButton = new JButton("View Books");
-		viewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ViewBook.main(null);
-			}
-		});
-		JButton usersButton = new JButton("View Users");
-		JButton rentedBooksButton = new JButton("View Rented Books");
+		frmAdminFunctions = new JFrame("User Functions");
+		frmAdminFunctions.setTitle("Admin Functions");
+		frmAdminFunctions.setBounds(100, 100, 450, 300);
+		frmAdminFunctions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 0, 485, 221);
+		frmAdminFunctions.getContentPane().setLayout(null);
+		frmAdminFunctions.getContentPane().add(panel);
+		panel.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 48, 485, 173);
+		panel.add(scrollPane);
+
+		table = new JTable();
+		scrollPane.setViewportView(table);
+
+		JLabel lblNewLabel = new JLabel("Current books borrowed:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setBounds(10, 11, 165, 26);
+		panel.add(lblNewLabel);
+
+		JButton refreshButton = new JButton("Refresh");
+		refreshButton.setBounds(386, 11, 89, 23);
+		panel.add(refreshButton);
+
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(0, 262, 485, 221);
+		frmAdminFunctions.getContentPane().add(panel_1);
+		panel_1.setLayout(null);
+
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(0, 48, 485, 173);
+		panel_1.add(scrollPane_1);
+
+		table_1 = new JTable();
+		scrollPane_1.setViewportView(table_1);
+
+		JLabel lblBookBorrowingsHistory = new JLabel("Book borrowing's history:");
+		lblBookBorrowingsHistory.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblBookBorrowingsHistory.setBounds(10, 11, 165, 26);
+		panel_1.add(lblBookBorrowingsHistory);
+
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(485, 0, 280, 481);
+		frmAdminFunctions.getContentPane().add(panel_2);
+		panel_2.setLayout(null);
+		frmAdminFunctions.setSize(781, 544);
+		frmAdminFunctions.setVisible(true);// making the frame visible
+		frmAdminFunctions.setLocationRelativeTo(null);
+		
 		JButton addBookButton = new JButton("Add Book");
+		addBookButton.setBounds(151, 317, 119, 37);
+		panel_2.add(addBookButton);
 		addBookButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AddBook.main(null);
 			}
 		});
-		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		frame.getContentPane().add(viewButton);
-		frame.getContentPane().add(usersButton);
-		frame.getContentPane().add(rentedBooksButton);
-		frame.getContentPane().add(addBookButton);
-
 		JButton logOutButton = new JButton("Log Out");
+		logOutButton.setBounds(151, 365, 119, 37);
+		panel_2.add(logOutButton);
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
+				frmAdminFunctions.dispose();
 				MainMenu.main(null);
 			}
 		});
-
 		JButton addCategoryButton = new JButton("Add category");
+		panel_2.add(addCategoryButton);
+		addCategoryButton.setBounds(23, 365, 119, 37);
 		addCategoryButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AddCategory.main(null);
 			}
 		});
-		frame.getContentPane().add(addCategoryButton);
-		frame.getContentPane().add(logOutButton);
-		frame.setSize(600, 200);
-		frame.setVisible(true);// making the frame visible
-		frame.setLocationRelativeTo(null);
+		JButton viewButton = new JButton("View Books");
+		panel_2.add(viewButton);
+		viewButton.setBounds(23, 317, 119, 37);
+		viewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ViewBook.main(null);
+			}
+		});
 	}
-
 }
+
