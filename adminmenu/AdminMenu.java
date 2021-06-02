@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import menu.Login;
 import menu.MainMenu;
 import utilities.ViewBook;
 
@@ -66,7 +65,7 @@ public class AdminMenu {
 		frame.getContentPane().add(usersButton);
 		frame.getContentPane().add(rentedBooksButton);
 		frame.getContentPane().add(addBookButton);
-		
+
 		JButton logOutButton = new JButton("Log Out");
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -74,7 +73,7 @@ public class AdminMenu {
 				MainMenu.main(null);
 			}
 		});
-		
+
 		JButton addCategoryButton = new JButton("Add category");
 		addCategoryButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

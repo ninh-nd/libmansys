@@ -8,6 +8,7 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import menu.DatabaseManagement;
 import javax.swing.JScrollPane;

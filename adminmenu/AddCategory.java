@@ -1,6 +1,5 @@
 package adminmenu;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,7 +9,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
-import book.info.Book;
 import menu.DatabaseManagement;
 
 import com.jgoodies.forms.layout.FormSpecs;
