@@ -144,5 +144,6 @@ public class Login {
 		loginMenuLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		loginMenuLabel.setBounds(50, 23, 324, 50);
 		frmLogin.getContentPane().add(loginMenuLabel);
+		frmLogin.getRootPane().setDefaultButton(loginButton); //Set Enter button on keyboard to login
 	}
 }
