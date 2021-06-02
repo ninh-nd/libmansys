@@ -27,7 +27,13 @@ import java.awt.event.ActionEvent;
 public class ViewBook {
 
 	private JFrame frmBookList;
-	private JTable table = new JTable();
+	private JTable table = new JTable() {
+		@Override
+	    public boolean isCellEditable(int row, int column) {
+	       //all cells false
+	       return false;
+	    }
+	};
 	private JTextField searchField;
 
 	/**
