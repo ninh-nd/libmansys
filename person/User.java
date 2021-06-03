@@ -19,13 +19,14 @@ public class User {
 		return username;
 	}
 
-	public User(String username, String password) {
+//	public User(String username, String password) {
+//		this.username = username;
+//		this.password = password;
+//	}
+
+	public User(String username, String password, String name, String email, String address, String phoneNumber) {
 		this.username = username;
 		this.password = password;
-	}
-
-	public User(String username, String name, String email, String address, String phoneNumber) {
-		this.username = username;
 		this.email = email;
 		this.name = name;
 		this.address = address;
