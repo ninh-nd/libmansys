@@ -8,6 +8,7 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import menu.DatabaseManagement;
 import javax.swing.JScrollPane;
@@ -26,7 +27,13 @@ import java.awt.event.ActionEvent;
 public class ViewBook {
 
 	private JFrame frmBookList;
-	private JTable table = new JTable();
+	private JTable table = new JTable() {
+		@Override
+	    public boolean isCellEditable(int row, int column) {
+	       //all cells false
+	       return false;
+	    }
+	};
 	private JTextField searchField;
 
 	/**

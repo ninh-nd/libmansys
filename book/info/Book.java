@@ -1,10 +1,6 @@
 package book.info;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Vector;
-
-import javax.swing.JOptionPane;
 
 public class Book {
 	private int book_id;

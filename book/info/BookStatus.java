@@ -3,6 +3,6 @@ public enum BookStatus {
 
 	Available,
 
-	Unavailable
+	Rented
 
 }
