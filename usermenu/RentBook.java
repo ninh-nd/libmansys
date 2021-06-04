@@ -117,11 +117,11 @@ public class RentBook extends JFrame {
 		contentPane.add(submitPanel);
 		
 		JButton submitButton = new JButton("Submit");
-		submitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				NormalUser.rentBook(Integer.parseInt(book_idField.getText()), UserMenu.user);
-			}
-		});
+//		submitButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				NormalUser.rentBook(Integer.parseInt(book_idField.getText()), UserMenu.user);
+//			}
+//		});
 		submitPanel.add(submitButton);
 	}
 }

@@ -1,7 +1,5 @@
 package person;
 
-import java.util.*;
-
 public class User {
 	private String username;
 
@@ -19,14 +17,6 @@ public class User {
 		return username;
 	}
 
-//	public User(String username, String password) {
-//		this.username = username;
-//		this.password = password;
-//	}
-
-<<<<<<< HEAD
-	public User(String username, String password, String name, String email, String address, String phoneNumber) {
-=======
 	public String getName() {
 		return name;
 	}
@@ -43,8 +33,7 @@ public class User {
 		return address;
 	}
 
-	public User(String username, String name, String email, String address, String phoneNumber) {
->>>>>>> c042d435141990dbad8c22d8b5cb19a35f26168c
+	public User(String username, String password, String name, String email, String address, String phoneNumber) {
 		this.username = username;
 		this.password = password;
 		this.email = email;

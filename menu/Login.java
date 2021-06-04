@@ -47,11 +47,12 @@ public class Login {
 					}
 					else { //Redirect to user menu
 						String getUserName = rs.getString(1);
+						String getPassword = rs.getString(2);
 						String getName = rs.getString(3);
 						String getEmail = rs.getString(4);
 						String getAddress = rs.getString(5);
 						String getPhoneNumber = rs.getString(3);
-						NormalUser user = new NormalUser(getUserName, getName, getEmail, getAddress, getPhoneNumber);
+						NormalUser user = new NormalUser(getUserName, getPassword, getName, getEmail, getAddress, getPhoneNumber);
 						UserMenu.setUser(user);
 						UserMenu.main(null);
 					}

@@ -12,15 +12,11 @@ import book.info.Book;
 import menu.DatabaseManagement;
 
 public class Librarian extends User {
-	public Librarian(String username, String password) {
-		super(username, password);
-	}
 	
-	public Librarian(String username, String name, String email, String address, String phoneNumber) {
-		super(username, name, email, address, phoneNumber);
-		// TODO Auto-generated constructor stub
+	public Librarian(String username, String password, String name, String email, String address, String phoneNumber) {
+		super(username, password, name, email, address, phoneNumber);
+		
 	}
-
 	private void updateBook(Book book) {
 		
 	}
