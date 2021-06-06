@@ -81,6 +81,12 @@ public class UserMenu {
 		panel.add(lblNewLabel);
 
 		JButton refreshButton = new JButton("Refresh");
+		refreshButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				currentTable.setModel(DbUtils.resultSetToTableModel(ViewRentedBook.viewUserRentedBook(user)));
+				historyTable.setModel(DbUtils.resultSetToTableModel(ViewHistory.viewUserHistory(user)));
+			}
+		});
 		refreshButton.setBounds(386, 11, 89, 23);
 		panel.add(refreshButton);
 
@@ -112,6 +118,11 @@ public class UserMenu {
 		rentBookButton.setBounds(23, 317, 119, 37);
 		panel_2.add(rentBookButton);
 		JButton returnBookButton = new JButton("Return Book");
+		returnBookButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReturnBook.main(null);
+			}
+		});
 		returnBookButton.setBounds(151, 317, 119, 37);
 		panel_2.add(returnBookButton);
 

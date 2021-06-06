@@ -1,4 +1,4 @@
-	package menu;
+ 	package menu;
 
 import java.awt.EventQueue;
 
