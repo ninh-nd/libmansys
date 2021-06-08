@@ -244,38 +244,42 @@ public class NormalUser extends User {
 		}
 	}
 
-	public static void renewBook(ArrayList<Integer> book_id) {
-		try (Connection conn = DatabaseManagement.connect();) {
-			ArrayList<Integer> extended_id = new ArrayList<Integer>(), renew_id = new ArrayList<Integer>();
-			for (int id : book_id) {
-				String sql = "SELECT is_extended FROM renting WHERE (book_id = ?)";
-				PreparedStatement stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, id);
-				ResultSet rs = stmt.executeQuery();
-				while (rs.next()) {
-					if (rs.getBoolean("is_extended"))
-						extended_id.add(id);
-					else {
-						Date due_date = Date.valueOf(LocalDate.now().plusDays(30));
-						sql = "UPDATE renting SET due_date = ?, is_extended = 'true' WHERE (book_id = ?)";
-						stmt = conn.prepareStatement(sql);
-						stmt.setDate(1, due_date);
-						stmt.setInt(2, id);
-						int rows = stmt.executeUpdate();
-						if (rows == 0) {
-							JOptionPane.showMessageDialog(null, "Cannot update database", null,
-									JOptionPane.ERROR_MESSAGE);
-							return;
+	public static boolean renewBook(ArrayList<Integer> book_id) {
+		if (!book_id.isEmpty()) {
+			try (Connection conn = DatabaseManagement.connect();) {
+				ArrayList<Integer> extended_id = new ArrayList<Integer>(), renew_id = new ArrayList<Integer>();
+				for (int id : book_id) {
+					String sql = "SELECT is_extended FROM renting WHERE (book_id = ?)";
+					PreparedStatement stmt = conn.prepareStatement(sql);
+					stmt.setInt(1, id);
+					ResultSet rs = stmt.executeQuery();
+					while (rs.next()) {
+						if (rs.getBoolean("is_extended"))
+							extended_id.add(id);
+						else {
+							Date due_date = Date.valueOf(LocalDate.now().plusDays(30));
+							sql = "UPDATE renting SET due_date = ?, is_extended = 'true' WHERE (book_id = ?)";
+							stmt = conn.prepareStatement(sql);
+							stmt.setDate(1, due_date);
+							stmt.setInt(2, id);
+							int rows = stmt.executeUpdate();
+							if (rows == 0) {
+								JOptionPane.showMessageDialog(null, "Cannot update database", null,
+										JOptionPane.ERROR_MESSAGE);
+								return false;
+							}
+							renew_id.add(id);
 						}
-						renew_id.add(id);
 					}
 				}
+				RenewNotification(extended_id, renew_id);
+				return true;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
-			RenewNotification(extended_id, renew_id);
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
 		}
+		return false;
 	}
 
 //	public static void main(String[] args) {
