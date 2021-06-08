@@ -282,12 +282,91 @@ public class NormalUser extends User {
 		return false;
 	}
 
+	private static boolean checkPassword(String password, String newPassword) {
+		if (!password.isEmpty()) {
+			try (Connection conn = DatabaseManagement.connect();) {
+				String sql = "SELECT password FROM users WHERE (password = ?)";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1,password);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.equals(newPassword)) {
+					JOptionPane.showMessageDialog(null, "Please enter the new password", null, JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+			} catch (SQLException err) {
+				System.out.println(err.getMessage());
+			}
+			return true;
+		} else
+			return false;
+	}
+	
+	private static boolean checkUsername(String username) {
+		if(!username.isEmpty()) {
+			try (Connection conn = DatabaseManagement.connect();) {
+				String sql = "SELECT username FROM users WHERE (username = ?)";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, username);
+				ResultSet rs = stmt.executeQuery();
+				if (!rs.next()) {
+					JOptionPane.showMessageDialog(null, "Wrong username", null, JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+			} catch (SQLException err) {
+				System.out.println(err.getMessage());
+			}
+			return true;
+			
+		}
+		return true;
+	}
+	
+	private static boolean confirmPassword(String newPassword, String confirmPassword) {
+		if (!newPassword.isEmpty() && !confirmPassword.isEmpty()) {
+			if (!newPassword.equals(confirmPassword)) {
+				JOptionPane.showMessageDialog(null, "Password does not match", null, JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			return true;
+		} else
+			return false;
+	}
+	
+	public static void changePassword(String username, String password, String newPassword, String confirmPassword) {
+		
+		if (username.trim().isEmpty() || password.trim().isEmpty()|| newPassword.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Blank field", null, JOptionPane.ERROR_MESSAGE);
+		} else {
+			if (checkUsername(username) && checkPassword(password, newPassword) && confirmPassword(newPassword, confirmPassword) ) {
+				try {
+					String sql = "UPDATE users SET password = ? WHERE username = ?";
+					Connection conn = DatabaseManagement.connect();
+					PreparedStatement stmt = conn.prepareStatement(sql);
+					stmt.setString(1, newPassword);
+					stmt.setString(2, username);
+					stmt.executeUpdate();
+					JOptionPane.showMessageDialog(null, "Change password successfully", null, JOptionPane.PLAIN_MESSAGE);					
+				} catch (SQLException err) {
+					System.out.println(err.getMessage());
+				}
+			}
+		}
+		
+		
+		
+	}
+	
+	public static void main(String[] args) {
+
+
 //	public static void main(String[] args) {
+
 //		NormalUser user = new NormalUser("an","andesu");
 //		ArrayList<Integer> list1 = new ArrayList<Integer>(List.of(1,3,5,7));
 //		ArrayList<Integer> list2 = new ArrayList<Integer>(List.of(2,4,6));
 //		user.rentBook(list2, user);
 //		user.renewBook(list1);
 //		user.returnBook(list1, user);
-//	}
+//		changePassword("an", "andesu", "1", "1");
+	}
 }
