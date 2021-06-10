@@ -117,17 +117,17 @@ public class UserMenu {
         JButton viewButton = new JButton("View Books");
         viewButton.setBounds(23, 365, 119, 37);
         panel_2.add(viewButton);
-        JButton rentBookButton = new JButton("Rent Book");
-        rentBookButton.setBounds(23, 317, 119, 37);
-        panel_2.add(rentBookButton);
-        JButton returnBookButton = new JButton("Return Book");
-        returnBookButton.addActionListener(new ActionListener() {
+        JButton rentBooksButton = new JButton("Rent Books");
+        rentBooksButton.setBounds(23, 317, 119, 37);
+        panel_2.add(rentBooksButton);
+        JButton returnBooksButton = new JButton("Return Books");
+        returnBooksButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ReturnBook.main(null);
             }
         });
-        returnBookButton.setBounds(151, 317, 119, 37);
-        panel_2.add(returnBookButton);
+        returnBooksButton.setBounds(151, 317, 119, 37);
+        panel_2.add(returnBooksButton);
 
         JButton logOutButton = new JButton("Log Out");
         logOutButton.addActionListener(new ActionListener() {
@@ -151,7 +151,7 @@ public class UserMenu {
         textArea.append("- Email: " + user.getEmail() + "\n");
         textArea.append("- Phone: " + user.getPhoneNumber() + "\n");
         textArea.append("- Address: " + user.getAddress() + "\n");
-        rentBookButton.addActionListener(new ActionListener() {
+        rentBooksButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 RentBook.main(null);
             }
