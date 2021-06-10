@@ -1,33 +1,45 @@
 package usermenu;
 
-import java.awt.BorderLayout;
+import net.proteanit.sql.DbUtils;
+import utilities.Search;
+
 import java.awt.EventQueue;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.*;
+import java.util.Vector;
 
 import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import menu.DatabaseManagement;
+import javax.swing.JScrollPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.JRadioButton;
+import java.awt.FlowLayout;
 
-import person.NormalUser;
-
-import com.jgoodies.forms.layout.FormSpecs;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class RentBook extends JFrame {
+public class RentBook {
 
-	private JPanel contentPane;
-	private JTextField book_idField;
-	private JTextField periodField;
-	private JTextField rentDateField;
+	private JFrame frmBookList;
+	private JTable table = new JTable() {
+		@Override
+		public Class getColumnClass(int column) {
+		    return (getValueAt(0, column).getClass());
+		  } //Render true/false as checkboxes
+		@Override
+	    public boolean isCellEditable(int row, int column) {
+	       if (column == table.getColumnCount() - 1) return true;
+	       else return false;
+	    }
+	};
+	//Generate array of checkboxes
+	private static Vector<Boolean> checkbox = new Vector<Boolean>();
+	private JTextField searchField;
 
 	/**
 	 * Launch the application.
@@ -36,8 +48,8 @@ public class RentBook extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RentBook frame = new RentBook();
-					frame.setVisible(true);
+					RentBook window = new RentBook();
+					window.frmBookList.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,82 +58,111 @@ public class RentBook extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the application.
 	 */
 	public RentBook() {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
+		String sql = "SELECT * FROM books WHERE book_status = 'Available' ORDER BY book_id";
+		try {
+			Connection conn = DatabaseManagement.connect();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			DefaultTableModel tableModel = (DefaultTableModel) DbUtils.resultSetToTableModel(rs);
+			for (int i=0; i< tableModel.getRowCount(); i++)
+				checkbox.add(false);
+			tableModel.addColumn("Select", checkbox);
+			table.setModel(tableModel);
+		} catch (SQLException err) {
+			System.out.println(err.getMessage());
+		}
+		initialize();
+	}
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmBookList = new JFrame();
+		frmBookList.setTitle("Book list");
+		frmBookList.setVisible(true);
+		frmBookList.setBounds(100, 100, 788, 507);
+		frmBookList.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmBookList.getContentPane().setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 145, 772, 193);
+		frmBookList.getContentPane().add(scrollPane);
+		scrollPane.setViewportView(table);
+
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 434, 206);
-		contentPane.add(panel);
-		panel.setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("center:max(82dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(86dlu;default)"),},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
-		
-		JLabel book_idLabel = new JLabel("Book ID");
-		panel.add(book_idLabel, "6, 4");
-		
-		book_idField = new JTextField();
-		book_idField.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(book_idField, "10, 4, fill, default");
-		book_idField.setColumns(10);
-		
-		JLabel periodLabel = new JLabel("Period");
-		panel.add(periodLabel, "6, 8");
-		
-		periodField = new JTextField();
-		periodField.setHorizontalAlignment(SwingConstants.CENTER);
-		periodField.setText("30");
-		periodField.setEditable(false);
-		panel.add(periodField, "10, 8, fill, default");
-		periodField.setColumns(10);
-		
-		JLabel rentDateLabel = new JLabel("Rent date (YYYY-MM-DD)");
-		panel.add(rentDateLabel, "6, 12");
-		
-		rentDateField = new JTextField();
-		rentDateField.setHorizontalAlignment(SwingConstants.CENTER);
-		rentDateField.setText(Date.valueOf(LocalDate.now()).toString());
-		rentDateField.setEditable(false);
-		panel.add(rentDateField, "10, 12, fill, default");
-		rentDateField.setColumns(10);
-		
-		JPanel submitPanel = new JPanel();
-		submitPanel.setBounds(0, 217, 434, 33);
-		contentPane.add(submitPanel);
+		panel.setBounds(0, 0, 772, 144);
+		frmBookList.getContentPane().add(panel);
+		panel.setLayout(null);
+
+		searchField = new JTextField();
+		searchField.setBounds(276, 47, 219, 20);
+		panel.add(searchField);
+		searchField.setColumns(10);
+
+		JPanel optionPanel = new JPanel();
+		optionPanel.setBounds(0, 5, 772, 36);
+		panel.add(optionPanel);
+		optionPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		JRadioButton searchTitle = new JRadioButton("Search by title");
+		optionPanel.add(searchTitle);
+
+		JRadioButton searchCategory = new JRadioButton("Search by category");
+		optionPanel.add(searchCategory);
+
+		JRadioButton searchAuthor = new JRadioButton("Search by author");
+		optionPanel.add(searchAuthor);
+
+		JRadioButton searchPublisher = new JRadioButton("Search by publisher");
+		optionPanel.add(searchPublisher);
+
+		ButtonGroup group = new ButtonGroup(); // Add buttons into a group so that one can only choose one radiobox
+		group.add(searchTitle);
+		group.add(searchPublisher);
+		group.add(searchCategory);
+		group.add(searchAuthor);
+
+		JButton searchButton = new JButton("Search");
+		frmBookList.getRootPane().setDefaultButton(searchButton); // Pressing Enter will also search
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (searchCategory.isSelected() && !searchField.getText().isBlank()) {
+					DefaultTableModel tableModel = (DefaultTableModel) DbUtils.resultSetToTableModel(Search.searchCategory(searchField.getText()));
+					tableModel.addColumn("Select", checkbox);
+					table.setModel(tableModel);
+				}
+				if (searchTitle.isSelected() && !searchField.getText().isBlank()) {
+					DefaultTableModel tableModel = (DefaultTableModel) DbUtils.resultSetToTableModel(Search.searchTitle(searchField.getText()));
+					tableModel.addColumn("Select", checkbox);
+					table.setModel(tableModel);
+				}
+				if (searchPublisher.isSelected() && !searchField.getText().isBlank()) {
+					DefaultTableModel tableModel = (DefaultTableModel) DbUtils.resultSetToTableModel(Search.searchPublisher(searchField.getText()));
+					tableModel.addColumn("Select", checkbox);
+					table.setModel(tableModel);
+				}
+
+				if (searchAuthor.isSelected() && !searchField.getText().isBlank()) {
+					DefaultTableModel tableModel = (DefaultTableModel) DbUtils.resultSetToTableModel(Search.searchAuthor(searchField.getText()));
+					tableModel.addColumn("Select", checkbox);
+					table.setModel(tableModel);
+				}
+
+				if (searchField.getText().isBlank()) {
+					DefaultTableModel tableModel = (DefaultTableModel) DbUtils.resultSetToTableModel(Search.showAllBook());
+					tableModel.addColumn("Select", checkbox);
+					table.setModel(tableModel);
+				}
+			}
+		});
+		searchButton.setBounds(341, 78, 89, 23);
+		panel.add(searchButton);
 		
 		JButton submitButton = new JButton("Submit");
-//		submitButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				NormalUser.rentBook(Integer.parseInt(book_idField.getText()), UserMenu.user);
-//			}
-//		});
-		submitPanel.add(submitButton);
+		submitButton.setBounds(341, 389, 89, 23);
+		frmBookList.getContentPane().add(submitButton);
 	}
 }
