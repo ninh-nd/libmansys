@@ -22,144 +22,152 @@ import utilities.ViewRentedBook;
 
 public class UserMenu {
 
-	private JFrame frmUserFunctions;
-	protected static NormalUser user;
-	private JTable currentTable;
-	private JTable historyTable;
+    private JFrame frmUserFunctions;
+    protected static NormalUser user;
+    private JTable currentTable;
+    private JTable historyTable;
 
-	public static void setUser(NormalUser user) {
-		UserMenu.user = user;
-	}
+    public static void setUser(NormalUser user) {
+        UserMenu.user = user;
+    }
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserMenu window = new UserMenu();
-					window.frmUserFunctions.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    UserMenu window = new UserMenu();
+                    window.frmUserFunctions.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-	/**
-	 * Create the application.
-	 */
-	public UserMenu() {
-		initialize();
-	}
+    /**
+     * Create the application.
+     */
+    public UserMenu() {
+        initialize();
+    }
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frmUserFunctions = new JFrame("User Functions");
-		frmUserFunctions.setBounds(100, 100, 450, 300);
-		frmUserFunctions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    /**
+     * Initialize the contents of the frame.
+     */
+    private void initialize() {
+        frmUserFunctions = new JFrame("User Functions");
+        frmUserFunctions.setBounds(100, 100, 450, 300);
+        frmUserFunctions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 485, 221);
-		frmUserFunctions.getContentPane().setLayout(null);
-		frmUserFunctions.getContentPane().add(panel);
-		panel.setLayout(null);
+        JPanel panel = new JPanel();
+        panel.setBounds(0, 0, 485, 221);
+        frmUserFunctions.getContentPane().setLayout(null);
+        frmUserFunctions.getContentPane().add(panel);
+        panel.setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 48, 485, 173);
-		panel.add(scrollPane);
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(0, 48, 485, 173);
+        panel.add(scrollPane);
 
-		currentTable = new JTable();
-		scrollPane.setViewportView(currentTable);
-		currentTable.setModel(DbUtils.resultSetToTableModel(ViewRentedBook.viewUserRentedBook(user)));
-		JLabel lblNewLabel = new JLabel("Current books borrowed:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel.setBounds(10, 11, 165, 26);
-		panel.add(lblNewLabel);
+        currentTable = new JTable();
+        scrollPane.setViewportView(currentTable);
+        currentTable.setModel(DbUtils.resultSetToTableModel(ViewRentedBook.viewUserRentedBook(user)));
+        JLabel lblNewLabel = new JLabel("Current books borrowed:");
+        lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        lblNewLabel.setBounds(10, 11, 165, 26);
+        panel.add(lblNewLabel);
 
-		JButton refreshButton = new JButton("Refresh");
-		refreshButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				currentTable.setModel(DbUtils.resultSetToTableModel(ViewRentedBook.viewUserRentedBook(user)));
-				historyTable.setModel(DbUtils.resultSetToTableModel(ViewHistory.viewUserHistory(user)));
-			}
-		});
-		refreshButton.setBounds(386, 11, 89, 23);
-		panel.add(refreshButton);
+        JButton refreshButton = new JButton("Refresh");
+        refreshButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                currentTable.setModel(DbUtils.resultSetToTableModel(ViewRentedBook.viewUserRentedBook(user)));
+                historyTable.setModel(DbUtils.resultSetToTableModel(ViewHistory.viewUserHistory(user)));
+            }
+        });
+        refreshButton.setBounds(386, 11, 89, 23);
+        panel.add(refreshButton);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 262, 485, 221);
-		frmUserFunctions.getContentPane().add(panel_1);
-		panel_1.setLayout(null);
+        JPanel panel_1 = new JPanel();
+        panel_1.setBounds(0, 262, 485, 221);
+        frmUserFunctions.getContentPane().add(panel_1);
+        panel_1.setLayout(null);
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(0, 48, 485, 173);
-		panel_1.add(scrollPane_1);
+        JScrollPane scrollPane_1 = new JScrollPane();
+        scrollPane_1.setBounds(0, 48, 485, 173);
+        panel_1.add(scrollPane_1);
 
-		historyTable = new JTable();
-		scrollPane_1.setViewportView(historyTable);
-		historyTable.setModel(DbUtils.resultSetToTableModel(ViewHistory.viewUserHistory(user)));
-		JLabel lblBookBorrowingsHistory = new JLabel("Book borrowing's history:");
-		lblBookBorrowingsHistory.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblBookBorrowingsHistory.setBounds(10, 11, 165, 26);
-		panel_1.add(lblBookBorrowingsHistory);
+        historyTable = new JTable();
+        scrollPane_1.setViewportView(historyTable);
+        historyTable.setModel(DbUtils.resultSetToTableModel(ViewHistory.viewUserHistory(user)));
+        JLabel lblBookBorrowingsHistory = new JLabel("Book borrowing's history:");
+        lblBookBorrowingsHistory.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        lblBookBorrowingsHistory.setBounds(10, 11, 165, 26);
+        panel_1.add(lblBookBorrowingsHistory);
 
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(485, 0, 280, 481);
-		frmUserFunctions.getContentPane().add(panel_2);
-		panel_2.setLayout(null);
-		JButton viewButton = new JButton("View Books");
-		viewButton.setBounds(23, 365, 119, 37);
-		panel_2.add(viewButton);
-		JButton rentBookButton = new JButton("Rent Book");
-		rentBookButton.setBounds(23, 317, 119, 37);
-		panel_2.add(rentBookButton);
-		JButton returnBookButton = new JButton("Return Book");
-		returnBookButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ReturnBook.main(null);
-			}
-		});
-		returnBookButton.setBounds(151, 317, 119, 37);
-		panel_2.add(returnBookButton);
+        JPanel panel_2 = new JPanel();
+        panel_2.setBounds(485, 0, 280, 481);
+        frmUserFunctions.getContentPane().add(panel_2);
+        panel_2.setLayout(null);
+        JButton renewButton = new JButton("Renew Books");
+        renewButton.setBounds(151, 365, 119, 37);
+        panel_2.add(renewButton);
+        JButton viewButton = new JButton("View Books");
+        viewButton.setBounds(23, 365, 119, 37);
+        panel_2.add(viewButton);
+        JButton rentBookButton = new JButton("Rent Book");
+        rentBookButton.setBounds(23, 317, 119, 37);
+        panel_2.add(rentBookButton);
+        JButton returnBookButton = new JButton("Return Book");
+        returnBookButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ReturnBook.main(null);
+            }
+        });
+        returnBookButton.setBounds(151, 317, 119, 37);
+        panel_2.add(returnBookButton);
 
-		JButton logOutButton = new JButton("Log Out");
-		logOutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frmUserFunctions.dispose();
-				MainMenu.main(null);
-			}
-		});
-		logOutButton.setBounds(151, 365, 119, 37);
-		panel_2.add(logOutButton);
-		JLabel lblNewLabel_1 = new JLabel("User's information");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblNewLabel_1.setBounds(69, 11, 142, 35);
-		panel_2.add(lblNewLabel_1);
+        JButton logOutButton = new JButton("Log Out");
+        logOutButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frmUserFunctions.dispose();
+                MainMenu.main(null);
+            }
+        });
+        logOutButton.setBounds(23, 417, 119, 37);
+        panel_2.add(logOutButton);
+        JLabel lblNewLabel_1 = new JLabel("User's information");
+        lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        lblNewLabel_1.setBounds(69, 11, 142, 35);
+        panel_2.add(lblNewLabel_1);
 
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 42, 260, 151);
-		panel_2.add(textArea);
-		textArea.append("- Username: " + user.getUsername() + "\n");
-		textArea.append("- Name: " + user.getName() + "\n");
-		textArea.append("- Email: " + user.getEmail() + "\n");
-		textArea.append("- Phone: " + user.getPhoneNumber() + "\n");
-		textArea.append("- Address: " + user.getAddress() + "\n");
-		rentBookButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				RentBook.main(null);
-			}
-		});
-		viewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ViewBook.main(null);
-			}
-		});
-		frmUserFunctions.setSize(781, 544);
-		frmUserFunctions.setVisible(true);// making the frame visible
-		frmUserFunctions.setLocationRelativeTo(null);
-	}
+        JTextArea textArea = new JTextArea();
+        textArea.setBounds(10, 42, 260, 151);
+        panel_2.add(textArea);
+        textArea.append("- Username: " + user.getUsername() + "\n");
+        textArea.append("- Name: " + user.getName() + "\n");
+        textArea.append("- Email: " + user.getEmail() + "\n");
+        textArea.append("- Phone: " + user.getPhoneNumber() + "\n");
+        textArea.append("- Address: " + user.getAddress() + "\n");
+        rentBookButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                RentBook.main(null);
+            }
+        });
+        viewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ViewBook.main(null);
+            }
+        });
+        renewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                RenewBook.main(null);
+            }
+        });
+        frmUserFunctions.setSize(781, 544);
+        frmUserFunctions.setVisible(true);// making the frame visible
+        frmUserFunctions.setLocationRelativeTo(null);
+    }
 }
