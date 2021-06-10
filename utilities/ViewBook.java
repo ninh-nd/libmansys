@@ -1,6 +1,8 @@
 package utilities;
 
 import net.proteanit.sql.DbUtils;
+import person.User;
+
 import java.awt.EventQueue;
 import java.sql.*;
 import java.util.Vector;
@@ -140,5 +142,17 @@ public class ViewBook {
 		});
 		searchButton.setBounds(341, 78, 89, 23);
 		panel.add(searchButton);
+	}
+	public static ResultSet viewBookAvailable() {
+		String sql = "Select * FROM books WHERE book_status = 'Available'";
+		try {
+			Connection conn = DatabaseManagement.connect();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			return rs;
+		} catch (Exception err) {			
+			System.out.println(err.getMessage());
+		}
+		return null;
 	}
 }

@@ -81,7 +81,7 @@ public class NormalUser extends User {
 		}
 	}
 
-	public static void rentBook(ArrayList<Integer> book_id, User user) {
+	public static boolean rentBook(ArrayList<Integer> book_id, User user) {
 		int cur_books = countBooks(user);
 		if (book_id.size() + cur_books > MAXIMUM_NUMBER_OF_BOOKS) {
 			JOptionPane.showMessageDialog(null,
@@ -119,7 +119,7 @@ public class NormalUser extends User {
 						if (rows == 0) {
 							JOptionPane.showMessageDialog(null, "Cannot update database", null,
 									JOptionPane.ERROR_MESSAGE);
-							return;
+							return false;
 						}
 						sql = "INSERT INTO renting (book_id,username,rented_date,due_date,is_extended) VALUES(?,?,?,?,'false')";
 						stmt = conn.prepareStatement(sql);
@@ -131,7 +131,7 @@ public class NormalUser extends User {
 						if (rows == 0) {
 							JOptionPane.showMessageDialog(null, "Cannot insert into database", null,
 									JOptionPane.ERROR_MESSAGE);
-							return;
+							return false;
 						}
 						sql = "INSERT INTO history (book_id,username,rented_date,return_date) VALUES(?,?,?,NULL)";
 						stmt = conn.prepareStatement(sql);
@@ -142,17 +142,22 @@ public class NormalUser extends User {
 						if (rows == 0) {
 							JOptionPane.showMessageDialog(null, "Cannot insert into database", null,
 									JOptionPane.ERROR_MESSAGE);
-							return;
+							return false;
 						}
 					}
 					SuccessfulNotification(free_id);
-				} else
+					return true;
+				} else {
 					FailedNotification(rented_id);
+					return false;
+				}
+					
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
 		}
+		return false;
 	}
 
 	public static boolean returnBook(ArrayList<Integer> book_id, User user) {
