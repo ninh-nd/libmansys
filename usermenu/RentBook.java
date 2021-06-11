@@ -158,9 +158,9 @@ public class RentBook extends JFrame {
 				ArrayList<Integer> rentList = new ArrayList<Integer>();
 				for (int i = 0; i < tableModel.getRowCount(); i++) {
 					if ((boolean) table.getModel().getValueAt(i, 6))
-						rentList.add((Integer) table.getModel().getValueAt(0, i));
+						rentList.add((Integer) table.getModel().getValueAt(i, 0));
 				}
-				if (NormalUser.returnBook(rentList, UserMenu.user))
+				if (NormalUser.rentBook(rentList, UserMenu.user))
 					dispose();
 			}
 		});

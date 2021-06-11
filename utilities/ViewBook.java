@@ -144,7 +144,7 @@ public class ViewBook {
 		panel.add(searchButton);
 	}
 	public static ResultSet viewBookAvailable() {
-		String sql = "Select * FROM books WHERE book_status = 'Available'";
+		String sql = "Select book_id, title, author, category, publisher, book_status FROM books WHERE book_status = 'Available'";
 		try {
 			Connection conn = DatabaseManagement.connect();
 			PreparedStatement stmt = conn.prepareStatement(sql);

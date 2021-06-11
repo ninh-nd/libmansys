@@ -93,7 +93,7 @@ public class RenewBook extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ArrayList<Integer> renewList = new ArrayList<Integer>();
                 for (int i=0; i< tableModel.getRowCount(); i++) {
-                    if ((boolean) table.getModel().getValueAt(i, 6)) renewList.add((Integer) table.getModel().getValueAt(0, i));
+                    if ((boolean) table.getModel().getValueAt(i, 6)) renewList.add((Integer) table.getModel().getValueAt(i, 0));
                 }
                 if (NormalUser.renewBook(renewList)) dispose();
             }

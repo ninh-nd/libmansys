@@ -90,7 +90,7 @@ public class ReturnBook extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Integer> returnList = new ArrayList<Integer>();
 				for (int i=0; i< tableModel.getRowCount(); i++) {
-					if ((boolean) table.getModel().getValueAt(i, 6)) returnList.add((Integer) table.getModel().getValueAt(0, i));
+					if ((boolean) table.getModel().getValueAt(i, 6)) returnList.add((Integer) table.getModel().getValueAt(i, 0));
 				}
 				if (NormalUser.returnBook(returnList, UserMenu.user)) dispose();
 			}
