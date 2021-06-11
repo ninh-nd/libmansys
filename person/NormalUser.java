@@ -38,7 +38,6 @@ public class NormalUser extends User {
 		}
 		return 0;
 	}
-
 	public static void FailedNotification(ArrayList<Integer> book_id) {
 		try (Connection conn = DatabaseManagement.connect();) {
 			String message = "Cannot rent:\n\n";
@@ -303,6 +302,7 @@ public class NormalUser extends User {
 			}
 			return true;
 		} else
+			JOptionPane.showMessageDialog(null, "Old password field is empty", null, JOptionPane.INFORMATION_MESSAGE);
 			return false;
 	}
 	
@@ -333,8 +333,13 @@ public class NormalUser extends User {
 				return false;
 			}
 			return true;
-		} else
+		} else {
+			if(newPassword.isEmpty())
+				JOptionPane.showMessageDialog(null, "New password field is empty", null, JOptionPane.INFORMATION_MESSAGE);
+			if(confirmPassword.isEmpty())
+				JOptionPane.showMessageDialog(null, "Please confirm new password", null, JOptionPane.INFORMATION_MESSAGE);
 			return false;
+		}
 	}
 	
 	public static void changePassword(String username, String password, String newPassword, String confirmPassword) {
