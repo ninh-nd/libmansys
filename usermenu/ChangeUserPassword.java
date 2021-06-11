@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Queue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -54,15 +55,15 @@ public class ChangeUserPassword extends JFrame {
 	 * Create the frame.
 	 */
 	public ChangeUserPassword() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 417, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 436, 205);
+		panel.setBounds(0, 0, 403, 216);
 		contentPane.add(panel);
 		panel.setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -97,36 +98,46 @@ public class ChangeUserPassword extends JFrame {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		
 		JLabel Old_passwordLabel = new JLabel("Old password");
-		panel.add(Old_passwordLabel, "4, 4");
+		panel.add(Old_passwordLabel, "4, 10");
 		
 		Old_passwordField = new JPasswordField();
-		panel.add(Old_passwordField, "7, 4, 11, 1, fill, default");
+		panel.add(Old_passwordField, "8, 10, 10, 1, fill, default");
 		
 		New_passwordLabel = new JLabel("New password");
-		panel.add(New_passwordLabel, "4, 8");
+		panel.add(New_passwordLabel, "4, 16");
 		
 		New_passwordField = new JPasswordField();
-		panel.add(New_passwordField, "7, 8, 11, 1, fill, default");
+		panel.add(New_passwordField, "8, 16, 10, 1, fill, default");
 		
 		Confirm_passwordLabel = new JLabel("Confirm new \r\npassword");
-		panel.add(Confirm_passwordLabel, "4, 12");
+		panel.add(Confirm_passwordLabel, "4, 22");
 		
 		Confirm_passwordField = new JPasswordField();
-		panel.add(Confirm_passwordField, "7, 12, 11, 1, fill, default");
+		panel.add(Confirm_passwordField, "8, 22, 10, 1");
 		
 		JPanel submitpanel = new JPanel();
-		submitpanel.setBounds(0, 215, 436, 38);
+		submitpanel.setBounds(0, 215, 403, 38);
 		contentPane.add(submitpanel);
 		
 		JButton SubmitButton = new JButton("Submit");
 		submitpanel.add(SubmitButton);
 		SubmitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NormalUser.changePassword(UserMenu.user.getUsername(), Old_passwordField.getText(), New_passwordField.getText(), Confirm_passwordField.getText());
+				if(NormalUser.changePassword(UserMenu.user.getUsername(), Old_passwordField.getText(), New_passwordField.getText(), Confirm_passwordField.getText()))
+				dispose();
 			}
 		});
+		getRootPane().setDefaultButton(SubmitButton);
 	}
 }

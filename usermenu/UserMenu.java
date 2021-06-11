@@ -19,6 +19,7 @@ import person.NormalUser;
 import utilities.ViewBook;
 import utilities.ViewHistory;
 import utilities.ViewRentedBook;
+import javax.swing.SwingConstants;
 
 public class UserMenu {
 
@@ -136,7 +137,7 @@ public class UserMenu {
                 MainMenu.main(null);
             }
         });
-        logOutButton.setBounds(23, 417, 119, 37);
+        logOutButton.setBounds(151, 414, 119, 37);
         panel_2.add(logOutButton);
         JLabel lblNewLabel_1 = new JLabel("User's information");
         lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -146,6 +147,12 @@ public class UserMenu {
         JTextArea textArea = new JTextArea();
         textArea.setBounds(10, 42, 260, 151);
         panel_2.add(textArea);
+        
+        JButton changePwdButton = new JButton("Change \nPasword");
+        changePwdButton.setFont(new Font("Tahoma", Font.BOLD, 8));
+        changePwdButton.setBounds(23, 414, 119, 37);
+        panel_2.add(changePwdButton);
+        
         textArea.append("- Username: " + user.getUsername() + "\n");
         textArea.append("- Name: " + user.getName() + "\n");
         textArea.append("- Email: " + user.getEmail() + "\n");
@@ -166,6 +173,14 @@ public class UserMenu {
                 RenewBook.main(null);
             }
         });
+        changePwdButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ChangeUserPassword.main(null);
+				
+			}
+		});
         frmUserFunctions.setSize(781, 544);
         frmUserFunctions.setVisible(true);// making the frame visible
         frmUserFunctions.setLocationRelativeTo(null);
