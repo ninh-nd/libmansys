@@ -63,6 +63,11 @@ public class MainMenu {
 		frame.getContentPane().add(loginButton);
 
 		JButton newAccountButton = new JButton("Create new account");
+		newAccountButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Register.main(null);
+			}
+		});
 
 		newAccountButton.setBounds(142, 270, 152, 47);
 		frame.getContentPane().add(newAccountButton);
