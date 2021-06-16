@@ -293,16 +293,16 @@ public class NormalUser extends User {
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setString(1,password);
 				ResultSet rs = stmt.executeQuery();
-				if (rs.equals(newPassword)) {
-					JOptionPane.showMessageDialog(null, "Please enter the new password", null, JOptionPane.ERROR_MESSAGE);
+				while(rs.next()) {
+					if(rs.getString("password").equals(newPassword)) {
+					JOptionPane.showMessageDialog(null, "Please enter a different password", null, JOptionPane.INFORMATION_MESSAGE);
 					return false;
-				}
+				}}
 			} catch (SQLException err) {
 				System.out.println(err.getMessage());
 			}
 			return true;
 		} else
-			JOptionPane.showMessageDialog(null, "Old password field is empty", null, JOptionPane.INFORMATION_MESSAGE);
 			return false;
 	}
 	
@@ -334,17 +334,13 @@ public class NormalUser extends User {
 			}
 			return true;
 		} else {
-			if(newPassword.isEmpty())
-				JOptionPane.showMessageDialog(null, "New password field is empty", null, JOptionPane.INFORMATION_MESSAGE);
-			if(confirmPassword.isEmpty())
-				JOptionPane.showMessageDialog(null, "Please confirm new password", null, JOptionPane.INFORMATION_MESSAGE);
 			return false;
 		}
 	}
 	
-	public static void changePassword(String username, String password, String newPassword, String confirmPassword) {
+	public static boolean changePassword(String username, String password, String newPassword, String confirmPassword) {
 		
-		if (username.trim().isEmpty() || password.trim().isEmpty()|| newPassword.isEmpty()) {
+		if (confirmPassword.trim().isEmpty() || password.trim().isEmpty()|| newPassword.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Blank field", null, JOptionPane.ERROR_MESSAGE);
 		} else {
 			if (checkUsername(username) && checkPassword(password, newPassword) && confirmPassword(newPassword, confirmPassword) ) {
@@ -355,13 +351,14 @@ public class NormalUser extends User {
 					stmt.setString(1, newPassword);
 					stmt.setString(2, username);
 					stmt.executeUpdate();
-					JOptionPane.showMessageDialog(null, "Change password successfully", null, JOptionPane.PLAIN_MESSAGE);					
+					JOptionPane.showMessageDialog(null, "Change password successfully", null, JOptionPane.PLAIN_MESSAGE);
+					return true;
 				} catch (SQLException err) {
 					System.out.println(err.getMessage());
 				}
 			}
 		}
-		
+		return false;
 		
 		
 	}
