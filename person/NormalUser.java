@@ -286,46 +286,6 @@ public class NormalUser extends User {
 		return false;
 	}
 
-	private static boolean checkPassword(String password, String newPassword) {
-		if (!password.isEmpty()) {
-			try (Connection conn = DatabaseManagement.connect();) {
-				String sql = "SELECT password FROM users WHERE (password = ?)";
-				PreparedStatement stmt = conn.prepareStatement(sql);
-				stmt.setString(1,password);
-				ResultSet rs = stmt.executeQuery();
-				while(rs.next()) {
-					if(rs.getString("password").equals(newPassword)) {
-					JOptionPane.showMessageDialog(null, "Please enter a different password", null, JOptionPane.INFORMATION_MESSAGE);
-					return false;
-				}}
-			} catch (SQLException err) {
-				System.out.println(err.getMessage());
-			}
-			return true;
-		} else
-			return false;
-	}
-	
-	private static boolean checkUsername(String username) {
-		if(!username.isEmpty()) {
-			try (Connection conn = DatabaseManagement.connect();) {
-				String sql = "SELECT username FROM users WHERE (username = ?)";
-				PreparedStatement stmt = conn.prepareStatement(sql);
-				stmt.setString(1, username);
-				ResultSet rs = stmt.executeQuery();
-				if (!rs.next()) {
-					JOptionPane.showMessageDialog(null, "Wrong username", null, JOptionPane.ERROR_MESSAGE);
-					return false;
-				}
-			} catch (SQLException err) {
-				System.out.println(err.getMessage());
-			}
-			return true;
-			
-		}
-		return true;
-	}
-	
 	private static boolean confirmPassword(String newPassword, String confirmPassword) {
 		if (!newPassword.isEmpty() && !confirmPassword.isEmpty()) {
 			if (!newPassword.equals(confirmPassword)) {
@@ -338,29 +298,40 @@ public class NormalUser extends User {
 		}
 	}
 	
-	public static boolean changePassword(String username, String password, String newPassword, String confirmPassword) {
+	public static boolean changePassword(User user, String oldPassword, String newPassword, String confirmPassword) {
 		
-		if (confirmPassword.trim().isEmpty() || password.trim().isEmpty()|| newPassword.isEmpty()) {
+		if (oldPassword.trim().isEmpty() || newPassword.trim().isEmpty()|| confirmPassword.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Blank field", null, JOptionPane.ERROR_MESSAGE);
+			return false;
 		} else {
-			if (checkUsername(username) && checkPassword(password, newPassword) && confirmPassword(newPassword, confirmPassword) ) {
-				try {
-					String sql = "UPDATE users SET password = ? WHERE username = ?";
-					Connection conn = DatabaseManagement.connect();
-					PreparedStatement stmt = conn.prepareStatement(sql);
-					stmt.setString(1, newPassword);
-					stmt.setString(2, username);
-					stmt.executeUpdate();
-					JOptionPane.showMessageDialog(null, "Change password successfully", null, JOptionPane.PLAIN_MESSAGE);
-					return true;
-				} catch (SQLException err) {
-					System.out.println(err.getMessage());
+			if (!oldPassword.equals(user.getPassword())) {
+				JOptionPane.showMessageDialog(null, "Old password is not correct", null, JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			else if (oldPassword.equals(user.getPassword())) {
+				if (oldPassword.equals(newPassword)) {
+					JOptionPane.showMessageDialog(null, "New password cannot be the same as old password", null, JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				else if (confirmPassword(newPassword, confirmPassword)) {
+					try {
+						String sql = "UPDATE users SET password = ? WHERE username = ?";
+						Connection conn = DatabaseManagement.connect();
+						PreparedStatement stmt = conn.prepareStatement(sql);
+						stmt.setString(1, newPassword);
+						stmt.setString(2, user.getUsername());
+						stmt.executeUpdate();
+						JOptionPane.showMessageDialog(null, "Change password successfully", null, JOptionPane.PLAIN_MESSAGE);
+						return true;
+					} catch (SQLException err) {
+						System.out.println(err.getMessage());
+					}
+					return false;
 				}
 			}
-		}
-		return false;
-		
-		
+			return false;
+			}
+			
 	}
 	
 	public static void main(String[] args) {
