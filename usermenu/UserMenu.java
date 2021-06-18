@@ -149,7 +149,7 @@ public class UserMenu {
         panel_2.add(textArea);
         
         JButton changePwdButton = new JButton("Change \nPasword");
-        changePwdButton.setFont(new Font("Tahoma", Font.BOLD, 8));
+        changePwdButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
         changePwdButton.setBounds(23, 414, 119, 37);
         panel_2.add(changePwdButton);
         

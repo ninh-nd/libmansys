@@ -44,6 +44,7 @@ public class Login {
 					if (username.equals("admin")) { //Redirect to admin menu
 						AdminMenu.main(null);
 						frmLogin.dispose();
+						MainMenu.frame.dispose();
 					}
 					else { //Redirect to user menu
 						String getUserName = rs.getString(1);
@@ -55,6 +56,8 @@ public class Login {
 						NormalUser user = new NormalUser(getUserName, getPassword, getName, getEmail, getAddress, getPhoneNumber);
 						UserMenu.setUser(user);
 						UserMenu.main(null);
+						frmLogin.dispose();
+						MainMenu.frame.dispose();
 					}
 					return true;
 				} else {

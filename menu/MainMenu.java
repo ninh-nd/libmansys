@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 
 public class MainMenu {
 
-	private JFrame frame;
+	protected static JFrame frame;
 
 	/**
 	 * Launch the application.

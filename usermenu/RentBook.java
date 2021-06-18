@@ -83,74 +83,74 @@ public class RentBook extends JFrame {
 		frmBookList.getContentPane().add(panel);
 		panel.setLayout(null);
 
-		searchField = new JTextField();
-		searchField.setBounds(276, 47, 219, 20);
-		panel.add(searchField);
-		searchField.setColumns(10);
-
-		JPanel optionPanel = new JPanel();
-		optionPanel.setBounds(0, 5, 772, 36);
-		panel.add(optionPanel);
-		optionPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		JRadioButton searchTitle = new JRadioButton("Search by title");
-		optionPanel.add(searchTitle);
-
-		JRadioButton searchCategory = new JRadioButton("Search by category");
-		optionPanel.add(searchCategory);
-
-		JRadioButton searchAuthor = new JRadioButton("Search by author");
-		optionPanel.add(searchAuthor);
-
-		JRadioButton searchPublisher = new JRadioButton("Search by publisher");
-		optionPanel.add(searchPublisher);
-
-		ButtonGroup group = new ButtonGroup(); // Add buttons into a group so that one can only choose one radiobox
-		group.add(searchTitle);
-		group.add(searchPublisher);
-		group.add(searchCategory);
-		group.add(searchAuthor);
-
-		JButton searchButton = new JButton("Search");
-		frmBookList.getRootPane().setDefaultButton(searchButton); // Pressing Enter will also search
-		searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (searchCategory.isSelected() && !searchField.getText().isBlank()) {
-					DefaultTableModel tableModel = (DefaultTableModel) DbUtils
-							.resultSetToTableModel(Search.searchCategory(searchField.getText()));
-					tableModel.addColumn("Select", checkbox);
-					table.setModel(tableModel);
-				}
-				if (searchTitle.isSelected() && !searchField.getText().isBlank()) {
-					DefaultTableModel tableModel = (DefaultTableModel) DbUtils
-							.resultSetToTableModel(Search.searchTitle(searchField.getText()));
-					tableModel.addColumn("Select", checkbox);
-					table.setModel(tableModel);
-				}
-				if (searchPublisher.isSelected() && !searchField.getText().isBlank()) {
-					DefaultTableModel tableModel = (DefaultTableModel) DbUtils
-							.resultSetToTableModel(Search.searchPublisher(searchField.getText()));
-					tableModel.addColumn("Select", checkbox);
-					table.setModel(tableModel);
-				}
-
-				if (searchAuthor.isSelected() && !searchField.getText().isBlank()) {
-					DefaultTableModel tableModel = (DefaultTableModel) DbUtils
-							.resultSetToTableModel(Search.searchAuthor(searchField.getText()));
-					tableModel.addColumn("Select", checkbox);
-					table.setModel(tableModel);
-				}
-
-				if (searchField.getText().isBlank()) {
-					DefaultTableModel tableModel = (DefaultTableModel) DbUtils
-							.resultSetToTableModel(Search.showAllBook());
-					tableModel.addColumn("Select", checkbox);
-					table.setModel(tableModel);
-				}
-			}
-		});
-		searchButton.setBounds(341, 78, 89, 23);
-		panel.add(searchButton);
+//		searchField = new JTextField();
+//		searchField.setBounds(276, 47, 219, 20);
+//		panel.add(searchField);
+//		searchField.setColumns(10);
+//
+//		JPanel optionPanel = new JPanel();
+//		optionPanel.setBounds(0, 5, 772, 36);
+//		panel.add(optionPanel);
+//		optionPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+//
+//		JRadioButton searchTitle = new JRadioButton("Search by title");
+//		optionPanel.add(searchTitle);
+//
+//		JRadioButton searchCategory = new JRadioButton("Search by category");
+//		optionPanel.add(searchCategory);
+//
+//		JRadioButton searchAuthor = new JRadioButton("Search by author");
+//		optionPanel.add(searchAuthor);
+//
+//		JRadioButton searchPublisher = new JRadioButton("Search by publisher");
+//		optionPanel.add(searchPublisher);
+//
+//		ButtonGroup group = new ButtonGroup(); // Add buttons into a group so that one can only choose one radiobox
+//		group.add(searchTitle);
+//		group.add(searchPublisher);
+//		group.add(searchCategory);
+//		group.add(searchAuthor);
+//
+//		JButton searchButton = new JButton("Search");
+//		frmBookList.getRootPane().setDefaultButton(searchButton); // Pressing Enter will also search
+//		searchButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				if (searchCategory.isSelected() && !searchField.getText().isBlank()) {
+//					DefaultTableModel tableModel = (DefaultTableModel) DbUtils
+//							.resultSetToTableModel(Search.searchCategory(searchField.getText()));
+//					tableModel.addColumn("Select", checkbox);
+//					table.setModel(tableModel);
+//				}
+//				if (searchTitle.isSelected() && !searchField.getText().isBlank()) {
+//					DefaultTableModel tableModel = (DefaultTableModel) DbUtils
+//							.resultSetToTableModel(Search.searchTitle(searchField.getText()));
+//					tableModel.addColumn("Select", checkbox);
+//					table.setModel(tableModel);
+//				}
+//				if (searchPublisher.isSelected() && !searchField.getText().isBlank()) {
+//					DefaultTableModel tableModel = (DefaultTableModel) DbUtils
+//							.resultSetToTableModel(Search.searchPublisher(searchField.getText()));
+//					tableModel.addColumn("Select", checkbox);
+//					table.setModel(tableModel);
+//				}
+//
+//				if (searchAuthor.isSelected() && !searchField.getText().isBlank()) {
+//					DefaultTableModel tableModel = (DefaultTableModel) DbUtils
+//							.resultSetToTableModel(Search.searchAuthor(searchField.getText()));
+//					tableModel.addColumn("Select", checkbox);
+//					table.setModel(tableModel);
+//				}
+//
+//				if (searchField.getText().isBlank()) {
+//					DefaultTableModel tableModel = (DefaultTableModel) DbUtils
+//							.resultSetToTableModel(Search.showAllBook());
+//					tableModel.addColumn("Select", checkbox);
+//					table.setModel(tableModel);
+//				}
+//			}
+//		});
+//		searchButton.setBounds(341, 78, 89, 23);
+//		panel.add(searchButton);
 
 		JButton submitButton = new JButton("Submit");
 		submitButton.addActionListener(new ActionListener() {
