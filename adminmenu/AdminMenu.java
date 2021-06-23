@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import menu.MainMenu;
+import menu.Login;
 import net.proteanit.sql.DbUtils;
 import person.NormalUser;
 import utilities.ViewBook;
@@ -25,7 +25,6 @@ public class AdminMenu {
 	protected static NormalUser user;
 	private JTable currentTable;
 	private JTable historyTable;
-
 
 	/**
 	 * Launch the application.
@@ -105,7 +104,7 @@ public class AdminMenu {
 		frmAdminFunctions.setSize(781, 544);
 		frmAdminFunctions.setVisible(true);// making the frame visible
 		frmAdminFunctions.setLocationRelativeTo(null);
-		
+
 		JButton addBookButton = new JButton("Add Book");
 		addBookButton.setBounds(151, 317, 119, 37);
 		panel_2.add(addBookButton);
@@ -120,7 +119,7 @@ public class AdminMenu {
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmAdminFunctions.dispose();
-				MainMenu.main(null);
+				Login.main(null);
 			}
 		});
 		JButton addCategoryButton = new JButton("Add category");
@@ -141,4 +140,3 @@ public class AdminMenu {
 		});
 	}
 }
-

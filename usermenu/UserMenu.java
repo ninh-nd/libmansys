@@ -13,13 +13,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
-import menu.MainMenu;
 import net.proteanit.sql.DbUtils;
 import person.NormalUser;
 import utilities.ViewBook;
 import utilities.ViewHistory;
 import utilities.ViewRentedBook;
-import javax.swing.SwingConstants;
+
+import menu.Login;
 
 public class UserMenu {
 
@@ -134,7 +134,7 @@ public class UserMenu {
         logOutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frmUserFunctions.dispose();
-                MainMenu.main(null);
+				Login.main(null);
             }
         });
         logOutButton.setBounds(151, 414, 119, 37);

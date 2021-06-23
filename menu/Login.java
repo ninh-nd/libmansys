@@ -25,7 +25,6 @@ public class Login {
 	private JFrame frmLogin;
 	private JTextField textField;
 	private JPasswordField passwordField;
-	private JButton exitButton;
 	private JLabel loginMenuLabel;
 	/**
 	 * Check username and password from database
@@ -44,7 +43,6 @@ public class Login {
 					if (username.equals("admin")) { //Redirect to admin menu
 						AdminMenu.main(null);
 						frmLogin.dispose();
-						MainMenu.frame.dispose();
 					}
 					else { //Redirect to user menu
 						String getUserName = rs.getString(1);
@@ -57,7 +55,6 @@ public class Login {
 						UserMenu.setUser(user);
 						UserMenu.main(null);
 						frmLogin.dispose();
-						MainMenu.frame.dispose();
 					}
 					return true;
 				} else {
@@ -110,7 +107,7 @@ public class Login {
 		frmLogin.getContentPane().add(userLabel);
 
 		JLabel passwordLabel = new JLabel("Password");
-		passwordLabel.setBounds(44, 155, 76, 14);
+		passwordLabel.setBounds(44, 132, 76, 14);
 		frmLogin.getContentPane().add(passwordLabel);
 
 		textField = new JTextField();
@@ -119,7 +116,7 @@ public class Login {
 		textField.setColumns(10);
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(130, 152, 227, 20);
+		passwordField.setBounds(130, 129, 227, 20);
 		frmLogin.getContentPane().add(passwordField);
 
 		JButton loginButton = new JButton("Login");
@@ -131,17 +128,8 @@ public class Login {
 					frmLogin.dispose();
 			}
 		});
-		loginButton.setBounds(81, 197, 89, 23);
+		loginButton.setBounds(172, 160, 89, 23);
 		frmLogin.getContentPane().add(loginButton);
-
-		exitButton = new JButton("Exit");
-		exitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		exitButton.setBounds(268, 197, 89, 23);
-		frmLogin.getContentPane().add(exitButton);
 
 		loginMenuLabel = new JLabel("Library Management System");
 		loginMenuLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -149,5 +137,18 @@ public class Login {
 		loginMenuLabel.setBounds(50, 23, 324, 50);
 		frmLogin.getContentPane().add(loginMenuLabel);
 		frmLogin.getRootPane().setDefaultButton(loginButton); //Set Enter button on keyboard to login
+		
+		JLabel lblNewLabel = new JLabel("New to the library?");
+		lblNewLabel.setBounds(44, 201, 115, 14);
+		frmLogin.getContentPane().add(lblNewLabel);
+		
+		JButton registerButton = new JButton("Register");
+		registerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Register.main(null);
+			}
+		});
+		registerButton.setBounds(172, 197, 89, 23);
+		frmLogin.getContentPane().add(registerButton);
 	}
 }
