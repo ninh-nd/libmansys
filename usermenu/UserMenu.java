@@ -2,6 +2,7 @@ package usermenu;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,16 +14,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
-import menu.MainMenu;
+import menu.Login;
 import net.proteanit.sql.DbUtils;
 import person.NormalUser;
 import utilities.ViewBook;
-import utilities.ViewHistory;
-import utilities.ViewRentedBook;
 
 public class UserMenu {
 
-    private JFrame frmUserFunctions;
+    protected static JFrame frmUserFunctions;
     protected static NormalUser user;
     private JTable currentTable;
     private JTable historyTable;
@@ -74,7 +73,7 @@ public class UserMenu {
 
         currentTable = new JTable();
         scrollPane.setViewportView(currentTable);
-        currentTable.setModel(DbUtils.resultSetToTableModel(ViewRentedBook.viewUserRentedBook(user)));
+        currentTable.setModel(DbUtils.resultSetToTableModel(user.viewRentedBooks(user)));
         JLabel lblNewLabel = new JLabel("Current books borrowed:");
         lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
         lblNewLabel.setBounds(10, 11, 165, 26);
@@ -83,8 +82,8 @@ public class UserMenu {
         JButton refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                currentTable.setModel(DbUtils.resultSetToTableModel(ViewRentedBook.viewUserRentedBook(user)));
-                historyTable.setModel(DbUtils.resultSetToTableModel(ViewHistory.viewUserHistory(user)));
+                currentTable.setModel(DbUtils.resultSetToTableModel(user.viewRentedBooks(user)));
+                historyTable.setModel(DbUtils.resultSetToTableModel(user.viewHistory(user)));
             }
         });
         refreshButton.setBounds(386, 11, 89, 23);
@@ -101,7 +100,7 @@ public class UserMenu {
 
         historyTable = new JTable();
         scrollPane_1.setViewportView(historyTable);
-        historyTable.setModel(DbUtils.resultSetToTableModel(ViewHistory.viewUserHistory(user)));
+        historyTable.setModel(DbUtils.resultSetToTableModel(user.viewHistory(user)));
         JLabel lblBookBorrowingsHistory = new JLabel("Book borrowing's history:");
         lblBookBorrowingsHistory.setFont(new Font("Tahoma", Font.PLAIN, 15));
         lblBookBorrowingsHistory.setBounds(10, 11, 165, 26);
@@ -117,53 +116,69 @@ public class UserMenu {
         JButton viewButton = new JButton("View Books");
         viewButton.setBounds(23, 365, 119, 37);
         panel_2.add(viewButton);
-        JButton rentBookButton = new JButton("Rent Book");
-        rentBookButton.setBounds(23, 317, 119, 37);
-        panel_2.add(rentBookButton);
-        JButton returnBookButton = new JButton("Return Book");
-        returnBookButton.addActionListener(new ActionListener() {
+        JButton rentBooksButton = new JButton("Rent Books");
+        rentBooksButton.setBounds(23, 317, 119, 37);
+        panel_2.add(rentBooksButton);
+        JButton returnBooksButton = new JButton("Return Books");
+        returnBooksButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                frmUserFunctions.setState(Frame.ICONIFIED);
                 ReturnBook.main(null);
             }
         });
-        returnBookButton.setBounds(151, 317, 119, 37);
-        panel_2.add(returnBookButton);
+        returnBooksButton.setBounds(151, 317, 119, 37);
+        panel_2.add(returnBooksButton);
 
         JButton logOutButton = new JButton("Log Out");
         logOutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frmUserFunctions.dispose();
-                MainMenu.main(null);
+                Login.main(null);
             }
         });
-        logOutButton.setBounds(23, 417, 119, 37);
+        logOutButton.setBounds(151, 414, 119, 37);
         panel_2.add(logOutButton);
         JLabel lblNewLabel_1 = new JLabel("User's information");
         lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
-        lblNewLabel_1.setBounds(69, 11, 142, 35);
-        panel_2.add(lblNewLabel_1);
-
         JTextArea textArea = new JTextArea();
         textArea.setBounds(10, 42, 260, 151);
         panel_2.add(textArea);
+
+        JButton changePwdButton = new JButton("Change \nPasword");
+        changePwdButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        changePwdButton.setBounds(23, 414, 119, 37);
+        panel_2.add(changePwdButton);
+
         textArea.append("- Username: " + user.getUsername() + "\n");
         textArea.append("- Name: " + user.getName() + "\n");
         textArea.append("- Email: " + user.getEmail() + "\n");
         textArea.append("- Phone: " + user.getPhoneNumber() + "\n");
         textArea.append("- Address: " + user.getAddress() + "\n");
-        rentBookButton.addActionListener(new ActionListener() {
+        rentBooksButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                frmUserFunctions.setState(Frame.ICONIFIED);
                 RentBook.main(null);
             }
         });
         viewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                frmUserFunctions.setState(Frame.ICONIFIED);
                 ViewBook.main(null);
             }
         });
         renewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                frmUserFunctions.setState(Frame.ICONIFIED);
                 RenewBook.main(null);
+            }
+        });
+        changePwdButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frmUserFunctions.setState(Frame.ICONIFIED);
+                ChangeUserPassword.main(null);
+
             }
         });
         frmUserFunctions.setSize(781, 544);
