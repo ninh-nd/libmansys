@@ -50,7 +50,7 @@ public class Login {
 						String getName = rs.getString(3);
 						String getEmail = rs.getString(4);
 						String getAddress = rs.getString(5);
-						String getPhoneNumber = rs.getString(3);
+						String getPhoneNumber = rs.getString(6);
 						NormalUser user = new NormalUser(getUserName, getPassword, getName, getEmail, getAddress, getPhoneNumber);
 						UserMenu.setUser(user);
 						UserMenu.main(null);

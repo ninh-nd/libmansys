@@ -282,14 +282,13 @@ public class Register {
 						confirmpasswordTitle.setFont(new Font("Tahoma", Font.PLAIN, 13));
 						confirmpasswordTitle.setHorizontalAlignment(SwingConstants.CENTER);
 				
-				addressField = new JTextField();
-				GridBagConstraints gbc_addressField = new GridBagConstraints();
-				gbc_addressField.fill = GridBagConstraints.HORIZONTAL;
-				gbc_addressField.insets = new Insets(0, 0, 5, 5);
-				gbc_addressField.gridx = 1;
-				gbc_addressField.gridy = 2;
-				formPane.add(addressField, gbc_addressField);
-				addressField.setColumns(10);
+						confirmpasswordField = new JPasswordField();
+						GridBagConstraints gbc_confirmpasswordField = new GridBagConstraints();
+						gbc_confirmpasswordField.insets = new Insets(0, 0, 5, 5);
+						gbc_confirmpasswordField.fill = GridBagConstraints.HORIZONTAL;
+						gbc_confirmpasswordField.gridx = 1;
+						gbc_confirmpasswordField.gridy = 2;
+						formPane.add(confirmpasswordField, gbc_confirmpasswordField);
 				
 				phoneLabel = new JLabel("Phone number");
 				phoneLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -321,11 +320,12 @@ public class Register {
 						gbc_addressLabel.gridy = 3;
 						formPane.add(addressLabel, gbc_addressLabel);
 						
-								confirmpasswordField = new JPasswordField();
-								GridBagConstraints gbc_confirmpasswordField = new GridBagConstraints();
-								gbc_confirmpasswordField.fill = GridBagConstraints.HORIZONTAL;
-								gbc_confirmpasswordField.gridx = 3;
-								gbc_confirmpasswordField.gridy = 3;
-								formPane.add(confirmpasswordField, gbc_confirmpasswordField);
+						addressField = new JTextField();
+						GridBagConstraints gbc_addressField = new GridBagConstraints();
+						gbc_addressField.fill = GridBagConstraints.HORIZONTAL;
+						gbc_addressField.gridx = 3;
+						gbc_addressField.gridy = 3;
+						formPane.add(addressField, gbc_addressField);
+						addressField.setColumns(10);
 	}
 }
