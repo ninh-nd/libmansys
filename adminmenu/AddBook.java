@@ -1,6 +1,7 @@
 package adminmenu;
 
 import java.awt.EventQueue;
+import java.awt.Frame;
 
 import javax.swing.JFrame;
 import com.jgoodies.forms.layout.FormLayout;
@@ -9,6 +10,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import menu.DatabaseManagement;
 import person.Librarian;
+import usermenu.UserMenu;
 import utilities.ViewBook;
 
 import com.jgoodies.forms.layout.FormSpecs;

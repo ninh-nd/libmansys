@@ -2,6 +2,7 @@ package usermenu;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,7 +24,7 @@ import menu.Login;
 
 public class UserMenu {
 
-    private JFrame frmUserFunctions;
+    protected static JFrame frmUserFunctions;
     protected static NormalUser user;
     private JTable currentTable;
     private JTable historyTable;
@@ -124,6 +125,7 @@ public class UserMenu {
         JButton returnBooksButton = new JButton("Return Books");
         returnBooksButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frmUserFunctions.setState(Frame.ICONIFIED);
                 ReturnBook.main(null);
             }
         });
@@ -160,16 +162,19 @@ public class UserMenu {
         textArea.append("- Address: " + user.getAddress() + "\n");
         rentBooksButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frmUserFunctions.setState(Frame.ICONIFIED);
                 RentBook.main(null);
             }
         });
         viewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frmUserFunctions.setState(Frame.ICONIFIED);
                 ViewBook.main(null);
             }
         });
         renewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frmUserFunctions.setState(Frame.ICONIFIED);
                 RenewBook.main(null);
             }
         });
@@ -177,6 +182,7 @@ public class UserMenu {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				frmUserFunctions.setState(Frame.ICONIFIED);
 				ChangeUserPassword.main(null);
 				
 			}

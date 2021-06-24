@@ -2,6 +2,7 @@ package adminmenu;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -110,6 +111,7 @@ public class AdminMenu {
 		panel_2.add(addBookButton);
 		addBookButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmAdminFunctions.setState(Frame.ICONIFIED);
 				AddBook.main(null);
 			}
 		});
@@ -127,6 +129,7 @@ public class AdminMenu {
 		addCategoryButton.setBounds(23, 365, 119, 37);
 		addCategoryButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmAdminFunctions.setState(Frame.ICONIFIED);
 				AddCategory.main(null);
 			}
 		});
@@ -135,6 +138,7 @@ public class AdminMenu {
 		viewButton.setBounds(23, 317, 119, 37);
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmAdminFunctions.setState(Frame.ICONIFIED);
 				ViewBook.main(null);
 			}
 		});

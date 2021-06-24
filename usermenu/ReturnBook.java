@@ -2,6 +2,7 @@ package usermenu;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -92,7 +93,10 @@ public class ReturnBook extends JFrame {
 				for (int i=0; i< tableModel.getRowCount(); i++) {
 					if ((boolean) table.getModel().getValueAt(i, 6)) returnList.add((Integer) table.getModel().getValueAt(i, 0));
 				}
-				if (NormalUser.returnBook(returnList, UserMenu.user)) dispose();
+				if (NormalUser.returnBook(returnList, UserMenu.user)) {
+					dispose();
+					UserMenu.frmUserFunctions.setState(Frame.NORMAL);
+				}
 			}
 		});
 		submitButton.setBounds(251, 215, 89, 23);

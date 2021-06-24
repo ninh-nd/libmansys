@@ -2,6 +2,7 @@ package usermenu;
 
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -160,8 +161,11 @@ public class RentBook extends JFrame {
 					if ((boolean) table.getModel().getValueAt(i, 6))
 						rentList.add((Integer) table.getModel().getValueAt(i, 0));
 				}
-				if (NormalUser.rentBook(rentList, UserMenu.user))
+				if (NormalUser.rentBook(rentList, UserMenu.user)) {
 					dispose();
+					UserMenu.frmUserFunctions.setState(Frame.NORMAL);
+				}
+					
 			}
 		});
 		submitButton.setBounds(341, 389, 89, 23);

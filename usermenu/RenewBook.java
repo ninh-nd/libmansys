@@ -2,6 +2,7 @@ package usermenu;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -95,7 +96,10 @@ public class RenewBook extends JFrame {
                 for (int i=0; i< tableModel.getRowCount(); i++) {
                     if ((boolean) table.getModel().getValueAt(i, 6)) renewList.add((Integer) table.getModel().getValueAt(i, 0));
                 }
-                if (NormalUser.renewBook(renewList)) dispose();
+                if (NormalUser.renewBook(renewList)) {
+                	dispose();
+                	UserMenu.frmUserFunctions.setState(Frame.NORMAL);
+                }
             }
         });
         submitButton.setBounds(251, 215, 89, 23);

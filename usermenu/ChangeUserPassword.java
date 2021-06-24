@@ -22,8 +22,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
+import java.awt.Frame;
+
 import javax.swing.JPasswordField;
 
 public class ChangeUserPassword extends JFrame {
@@ -134,8 +137,11 @@ public class ChangeUserPassword extends JFrame {
 		submitpanel.add(SubmitButton);
 		SubmitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(NormalUser.changePassword(UserMenu.user, Old_passwordField.getText(), New_passwordField.getText(), Confirm_passwordField.getText()))
-				dispose();
+				if(NormalUser.changePassword(UserMenu.user, Old_passwordField.getText(), New_passwordField.getText(), Confirm_passwordField.getText())) {
+					dispose();
+					UserMenu.frmUserFunctions.setState(Frame.NORMAL);
+				}
+				
 			}
 		});
 		getRootPane().setDefaultButton(SubmitButton);
