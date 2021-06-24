@@ -1,6 +1,8 @@
 package person;
 
-public class User {
+import java.sql.ResultSet;
+
+public abstract class User {
 	private String username;
 
 	private String password;
@@ -45,4 +47,6 @@ public class User {
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 	}
+	public abstract ResultSet viewRentedBooks(User user);
+	public abstract ResultSet viewHistory(User user);
 }

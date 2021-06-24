@@ -1,30 +1,25 @@
 package utilities;
 
-import net.proteanit.sql.DbUtils;
-import person.User;
-
 import java.awt.EventQueue;
-import java.sql.*;
-import java.util.Vector;
-
-import javax.swing.JFrame;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import menu.DatabaseManagement;
-import javax.swing.JScrollPane;
-import javax.swing.JPanel;
-import java.awt.GridLayout;
-import javax.swing.JRadioButton;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import menu.DatabaseManagement;
+import net.proteanit.sql.DbUtils;
 
 public class ViewBook {
 

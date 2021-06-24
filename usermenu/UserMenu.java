@@ -14,13 +14,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
+import menu.Login;
 import net.proteanit.sql.DbUtils;
 import person.NormalUser;
 import utilities.ViewBook;
-import utilities.ViewHistory;
-import utilities.ViewRentedBook;
-
-import menu.Login;
 
 public class UserMenu {
 
@@ -76,7 +73,7 @@ public class UserMenu {
 
         currentTable = new JTable();
         scrollPane.setViewportView(currentTable);
-        currentTable.setModel(DbUtils.resultSetToTableModel(ViewRentedBook.viewUserRentedBook(user)));
+        currentTable.setModel(DbUtils.resultSetToTableModel(user.viewRentedBooks(user)));
         JLabel lblNewLabel = new JLabel("Current books borrowed:");
         lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
         lblNewLabel.setBounds(10, 11, 165, 26);
@@ -85,8 +82,8 @@ public class UserMenu {
         JButton refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                currentTable.setModel(DbUtils.resultSetToTableModel(ViewRentedBook.viewUserRentedBook(user)));
-                historyTable.setModel(DbUtils.resultSetToTableModel(ViewHistory.viewUserHistory(user)));
+                currentTable.setModel(DbUtils.resultSetToTableModel(user.viewRentedBooks(user)));
+                historyTable.setModel(DbUtils.resultSetToTableModel(user.viewHistory(user)));
             }
         });
         refreshButton.setBounds(386, 11, 89, 23);
@@ -103,7 +100,7 @@ public class UserMenu {
 
         historyTable = new JTable();
         scrollPane_1.setViewportView(historyTable);
-        historyTable.setModel(DbUtils.resultSetToTableModel(ViewHistory.viewUserHistory(user)));
+        historyTable.setModel(DbUtils.resultSetToTableModel(user.viewHistory(user)));
         JLabel lblBookBorrowingsHistory = new JLabel("Book borrowing's history:");
         lblBookBorrowingsHistory.setFont(new Font("Tahoma", Font.PLAIN, 15));
         lblBookBorrowingsHistory.setBounds(10, 11, 165, 26);

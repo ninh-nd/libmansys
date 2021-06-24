@@ -1,25 +1,26 @@
  	package menu;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.io.Reader;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import adminmenu.AdminMenu;
-import person.*;
+import person.Librarian;
+import person.NormalUser;
 import usermenu.UserMenu;
-
-import java.sql.*;
 
 public class Login {
 	private JFrame frmLogin;
@@ -41,6 +42,14 @@ public class Login {
 				if (rs.next()) {
 					JOptionPane.showMessageDialog(null, "Login Successfully");
 					if (username.equals("admin")) { //Redirect to admin menu
+						String getUserName = rs.getString(1);
+						String getPassword = rs.getString(2);
+						String getName = rs.getString(3);
+						String getEmail = rs.getString(4);
+						String getAddress = rs.getString(5);
+						String getPhoneNumber = rs.getString(6);
+						Librarian user = new Librarian(getUserName, getPassword, getName, getEmail, getAddress, getPhoneNumber);
+						AdminMenu.setUser(user);
 						AdminMenu.main(null);
 						frmLogin.dispose();
 					}

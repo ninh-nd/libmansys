@@ -1,11 +1,11 @@
 package utilities;
 
-import java.sql.*;
-
-import javax.swing.JTable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import menu.DatabaseManagement;
-import net.proteanit.sql.DbUtils;
 
 public class Search {
 	public static ResultSet searchTitle(String title) {

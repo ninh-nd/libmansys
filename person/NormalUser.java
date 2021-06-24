@@ -347,4 +347,36 @@ public class NormalUser extends User {
 //		user.returnBook(list1, user);
 //		changePassword("an", "andesu", "1", "1");
 	}
+
+	@Override
+	public ResultSet viewRentedBooks(User user) {
+		String sql = "Select r.book_id, b.title, r.username, r.rented_date, r.due_date, r.is_extended FROM renting r, books b WHERE r.book_id = b.book_id AND username = ?";
+		try {
+			String username = user.getUsername();
+			Connection conn = DatabaseManagement.connect();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
+			return rs;
+		} catch (Exception err) {			
+			System.out.println(err.getMessage());
+		}
+		return null;
+	}
+
+	@Override
+	public ResultSet viewHistory(User user) {
+		String sql = "Select h.book_id, h.username, b.title, h.rented_date, h.return_date FROM history h, books b WHERE h.book_id = b.book_id AND username = ?";
+		try {
+			String username = user.getUsername();
+			Connection conn = DatabaseManagement.connect();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
+			return rs;
+		} catch (Exception err) {			
+			System.out.println(err.getMessage());
+		}
+		return null;
+	}
 }

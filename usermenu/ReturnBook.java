@@ -1,26 +1,23 @@
 package usermenu;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.proteanit.sql.DbUtils;
 import person.NormalUser;
-import utilities.ViewRentedBook;
-
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ReturnBook extends JFrame {
 
@@ -78,7 +75,7 @@ public class ReturnBook extends JFrame {
 		panel.add(scrollPane);
 		
 		scrollPane.setViewportView(table);
-		DefaultTableModel tableModel = (DefaultTableModel) DbUtils.resultSetToTableModel(ViewRentedBook.viewUserRentedBook(UserMenu.user));
+		DefaultTableModel tableModel = (DefaultTableModel) DbUtils.resultSetToTableModel(UserMenu.user.viewRentedBooks(UserMenu.user));
 		checkbox.clear(); 
 		for (int i=0; i< tableModel.getRowCount(); i++) {
 			checkbox.add(false);
