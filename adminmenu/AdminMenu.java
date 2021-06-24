@@ -15,15 +15,17 @@ import javax.swing.JTable;
 
 import menu.Login;
 import net.proteanit.sql.DbUtils;
-import person.NormalUser;
+import person.Librarian;
 import utilities.ViewBook;
-import utilities.ViewHistory;
-import utilities.ViewRentedBook;
 
 public class AdminMenu {
 
     private JFrame frmAdminFunctions;
-    protected static NormalUser user;
+    protected static Librarian user;
+    public static void setUser(Librarian user) {
+        AdminMenu.user = user;
+    }
+
     private JTable currentTable;
     private JTable historyTable;
 
@@ -71,7 +73,7 @@ public class AdminMenu {
 
         currentTable = new JTable();
         scrollPane.setViewportView(currentTable);
-        currentTable.setModel(DbUtils.resultSetToTableModel(ViewRentedBook.viewRentedBook()));
+        currentTable.setModel(DbUtils.resultSetToTableModel(user.viewRentedBooks(user)));
         JLabel lblNewLabel = new JLabel("Current books borrowed:");
         lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
         lblNewLabel.setBounds(10, 11, 165, 26);
@@ -92,7 +94,7 @@ public class AdminMenu {
 
         historyTable = new JTable();
         scrollPane_1.setViewportView(historyTable);
-        historyTable.setModel(DbUtils.resultSetToTableModel(ViewHistory.viewHistory()));
+        historyTable.setModel(DbUtils.resultSetToTableModel(user.viewHistory(user)));
         JLabel lblBookBorrowingsHistory = new JLabel("Book borrowing's history:");
         lblBookBorrowingsHistory.setFont(new Font("Tahoma", Font.PLAIN, 15));
         lblBookBorrowingsHistory.setBounds(10, 11, 165, 26);
