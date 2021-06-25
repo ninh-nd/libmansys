@@ -20,9 +20,11 @@ public class NormalUser extends User {
 		super(username, password, name, email, address, phoneNumber);
 	}
 
-//	public NormalUser(String username,String password) {
-//		super(username,password);
-//	}
+	public static int getMaximumNumberOfBooks() {
+		return MAXIMUM_NUMBER_OF_BOOKS;
+	}
+
+
 	public static int countBooks(User user) {
 		try (Connection conn = DatabaseManagement.connect()) {
 			String sql = "SELECT count(book_id) AS count FROM renting WHERE (username = ?)";
@@ -82,6 +84,7 @@ public class NormalUser extends User {
 	}
 
 	public static boolean rentBook(ArrayList<Integer> book_id, User user) {
+		if(book_id.isEmpty()) return false;
 		int cur_books = countBooks(user);
 		if (book_id.size() + cur_books > MAXIMUM_NUMBER_OF_BOOKS) {
 			JOptionPane.showMessageDialog(null,
@@ -277,6 +280,7 @@ public class NormalUser extends User {
 					}
 				}
 				RenewNotification(extended_id, renew_id);
+				if(renew_id.isEmpty()) return false;
 				return true;
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());

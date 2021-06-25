@@ -48,7 +48,7 @@ public class AddCategory extends JFrame {
 	 */
 	public AddCategory() {
 		setTitle("New category");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -114,10 +114,23 @@ public class AddCategory extends JFrame {
 				} catch (SQLException err) {
 					System.out.println(err.getMessage());
 				}
+					dispose();
+					AdminMenu.main(null);
 				}
 				}
 			});
 		submitButton.setBounds(172, 37, 89, 23);
 		panel_1.add(submitButton);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setBounds(0, 0, 85, 21);
+		contentPane.add(backButton);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				AdminMenu.main(null);
+			}
+		});
+		getRootPane().setDefaultButton(submitButton);
 		}
 	}

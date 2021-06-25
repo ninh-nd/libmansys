@@ -54,7 +54,7 @@ public class ReturnBook extends JFrame {
 	 * Create the frame.
 	 */
 	public ReturnBook() {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 608, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -67,11 +67,11 @@ public class ReturnBook extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Select books to return:");
-		lblNewLabel.setBounds(10, 11, 153, 20);
+		lblNewLabel.setBounds(10, 34, 153, 20);
 		panel.add(lblNewLabel);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 33, 592, 154);
+		scrollPane.setBounds(0, 54, 592, 154);
 		panel.add(scrollPane);
 		
 		scrollPane.setViewportView(table);
@@ -83,6 +83,16 @@ public class ReturnBook extends JFrame {
 			
 		tableModel.addColumn("Select", checkbox);
 		table.setModel(tableModel);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setBounds(0, 0, 85, 21);
+		panel.add(backButton);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				UserMenu.main(null);
+			}
+		});
 		JButton submitButton = new JButton("Submit");
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -92,11 +102,11 @@ public class ReturnBook extends JFrame {
 				}
 				if (NormalUser.returnBook(returnList, UserMenu.user)) {
 					dispose();
-					UserMenu.frmUserFunctions.setState(Frame.NORMAL);
+					UserMenu.main(null);
 				}
 			}
 		});
-		submitButton.setBounds(251, 215, 89, 23);
+		submitButton.setBounds(251, 230, 89, 23);
 		contentPane.add(submitButton);
 	}
 }

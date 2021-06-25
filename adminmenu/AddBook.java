@@ -65,7 +65,7 @@ public class AddBook {
         frmAddBook = new JFrame();
         frmAddBook.setTitle("Add book");
         frmAddBook.setBounds(100, 100, 450, 300);
-        frmAddBook.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frmAddBook.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frmAddBook.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
                 FormSpecs.UNRELATED_GAP_COLSPEC,
                 ColumnSpec.decode("81px"),
@@ -146,5 +146,6 @@ public class AddBook {
         });
         frmAddBook.getContentPane().add(submitButton, "4, 10, right, top");
         frmAddBook.getContentPane().add(backButton, "2, 1, left, top");
+        frmAddBook.getRootPane().setDefaultButton(submitButton);
     }
 }

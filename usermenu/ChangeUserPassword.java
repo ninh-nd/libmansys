@@ -17,6 +17,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import menu.Login;
 import person.NormalUser;
 
 public class ChangeUserPassword extends JFrame {
@@ -27,6 +28,7 @@ public class ChangeUserPassword extends JFrame {
 	private JPasswordField Old_passwordField;
 	private JPasswordField New_passwordField;
 	private JPasswordField Confirm_passwordField;
+	private JButton backButton;
 
 	/**
 	 * Launch the application.
@@ -48,7 +50,7 @@ public class ChangeUserPassword extends JFrame {
 	 * Create the frame.
 	 */
 	public ChangeUserPassword() {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 417, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -101,6 +103,15 @@ public class ChangeUserPassword extends JFrame {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		
+		backButton = new JButton("Back");
+		panel.add(backButton, "2, 2");
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				UserMenu.main(null);
+			}
+		});
+		
 		JLabel Old_passwordLabel = new JLabel("Old password");
 		panel.add(Old_passwordLabel, "4, 10");
 		
@@ -129,7 +140,8 @@ public class ChangeUserPassword extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(NormalUser.changePassword(UserMenu.user, Old_passwordField.getText(), New_passwordField.getText(), Confirm_passwordField.getText())) {
 					dispose();
-					UserMenu.frmUserFunctions.setState(Frame.NORMAL);
+					UserMenu.setUser(null);
+					Login.main(null);
 				}
 				
 			}

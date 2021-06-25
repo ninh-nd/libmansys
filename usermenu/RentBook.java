@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 import person.NormalUser;
 import utilities.ViewBook;
+import javax.swing.JLabel;
 
 public class RentBook extends JFrame {
 
@@ -61,7 +62,7 @@ public class RentBook extends JFrame {
 		frmBookList.setTitle("Book list");
 		frmBookList.setVisible(true);
 		frmBookList.setBounds(100, 100, 788, 507);
-		frmBookList.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmBookList.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmBookList.getContentPane().setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -79,6 +80,21 @@ public class RentBook extends JFrame {
 		panel.setBounds(0, 0, 772, 144);
 		frmBookList.getContentPane().add(panel);
 		panel.setLayout(null);
+		
+		JButton backButton = new JButton("Back");
+		backButton.setBounds(0, 0, 85, 21);
+		panel.add(backButton);
+		
+		UserMenu.getUser();
+		JLabel lblNewLabel = new JLabel("You can rent up to "+(NormalUser.getMaximumNumberOfBooks()-NormalUser.countBooks(UserMenu.getUser()))+" books");
+		lblNewLabel.setBounds(305, 95, 184, 13);
+		panel.add(lblNewLabel);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmBookList.dispose();
+				UserMenu.main(null);
+			}
+		});
 
 //		searchField = new JTextField();
 //		searchField.setBounds(276, 47, 219, 20);
@@ -158,8 +174,8 @@ public class RentBook extends JFrame {
 						rentList.add((Integer) table.getModel().getValueAt(i, 0));
 				}
 				if (NormalUser.rentBook(rentList, UserMenu.user)) {
-					dispose();
-					UserMenu.frmUserFunctions.setState(Frame.NORMAL);
+					frmBookList.dispose();
+					UserMenu.main(null);
 				}
 					
 			}

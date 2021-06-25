@@ -30,7 +30,11 @@ public class UserMenu {
         UserMenu.user = user;
     }
 
-    /**
+    public static NormalUser getUser() {
+		return user;
+	}
+
+	/**
      * Launch the application.
      */
     public static void main(String[] args) {
@@ -122,7 +126,7 @@ public class UserMenu {
         JButton returnBooksButton = new JButton("Return Books");
         returnBooksButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frmUserFunctions.setState(Frame.ICONIFIED);
+                frmUserFunctions.dispose();
                 ReturnBook.main(null);
             }
         });
@@ -133,6 +137,7 @@ public class UserMenu {
         logOutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frmUserFunctions.dispose();
+                setUser(null);
                 Login.main(null);
             }
         });
@@ -156,27 +161,25 @@ public class UserMenu {
         textArea.append("- Address: " + user.getAddress() + "\n");
         rentBooksButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frmUserFunctions.setState(Frame.ICONIFIED);
+                frmUserFunctions.dispose();
                 RentBook.main(null);
             }
         });
         viewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frmUserFunctions.setState(Frame.ICONIFIED);
+                frmUserFunctions.dispose();
                 ViewBook.main(null);
             }
         });
         renewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frmUserFunctions.setState(Frame.ICONIFIED);
+                frmUserFunctions.dispose();
                 RenewBook.main(null);
             }
         });
         changePwdButton.addActionListener(new ActionListener() {
-
-            @Override
             public void actionPerformed(ActionEvent e) {
-                frmUserFunctions.setState(Frame.ICONIFIED);
+                frmUserFunctions.dispose();
                 ChangeUserPassword.main(null);
 
             }

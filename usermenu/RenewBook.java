@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import adminmenu.AdminMenu;
 import net.proteanit.sql.DbUtils;
 import person.NormalUser;
 
@@ -54,7 +55,7 @@ public class RenewBook extends JFrame {
      * Create the frame.
      */
     public RenewBook() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setBounds(100, 100, 608, 300);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -70,11 +71,11 @@ public class RenewBook extends JFrame {
         panel.setLayout(null);
 
         JLabel lblNewLabel = new JLabel("Select books to renew:");
-        lblNewLabel.setBounds(10, 11, 153, 20);
+        lblNewLabel.setBounds(10, 31, 153, 20);
         panel.add(lblNewLabel);
 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(0, 33, 592, 154);
+        scrollPane.setBounds(0, 52, 592, 154);
         panel.add(scrollPane);
 
         scrollPane.setViewportView(table);
@@ -86,6 +87,16 @@ public class RenewBook extends JFrame {
 
         tableModel.addColumn("Select", checkbox);
         table.setModel(tableModel);
+        
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(0, 0, 85, 21);
+        panel.add(backButton);
+        backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				UserMenu.main(null);
+			}
+		});
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -95,11 +106,11 @@ public class RenewBook extends JFrame {
                 }
                 if (NormalUser.renewBook(renewList)) {
                 	dispose();
-                	UserMenu.frmUserFunctions.setState(Frame.NORMAL);
+                	UserMenu.main(null);
                 }
             }
         });
-        submitButton.setBounds(251, 215, 89, 23);
+        submitButton.setBounds(251, 230, 89, 23);
         contentPane.add(submitButton);
     }
 }

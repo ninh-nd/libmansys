@@ -89,12 +89,12 @@ public class ViewBook {
         panel.setLayout(null);
 
         searchField = new JTextField();
-        searchField.setBounds(276, 47, 219, 20);
+        searchField.setBounds(277, 72, 219, 20);
         panel.add(searchField);
         searchField.setColumns(10);
 
         JPanel optionPanel = new JPanel();
-        optionPanel.setBounds(0, 5, 772, 36);
+        optionPanel.setBounds(0, 26, 772, 36);
         panel.add(optionPanel);
         optionPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -137,17 +137,18 @@ public class ViewBook {
                 // the search field is empty
             }
         });
-        searchButton.setBounds(341, 78, 89, 20);
+        searchButton.setBounds(341, 102, 89, 20);
         panel.add(searchButton);
 
         JButton backButton = new JButton("Back");
-        backButton.setBounds(25, 15, 70, 23);
-//        backButton.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//
-//                }
-//            }
-//        });
+        backButton.setBounds(0, 0, 70, 23);
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	frmBookList.dispose();
+            	if(UserMenu.getUser()==null) AdminMenu.main(null);
+            	else UserMenu.main(null);
+            }
+        });
         panel.add(backButton);
     }
     public static ResultSet viewBookAvailable() {
