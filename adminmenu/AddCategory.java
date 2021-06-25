@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -122,8 +123,8 @@ public class AddCategory extends JFrame {
 		submitButton.setBounds(172, 37, 89, 23);
 		panel_1.add(submitButton);
 		
-		JButton backButton = new JButton("Back");
-		backButton.setBounds(0, 0, 85, 21);
+        BasicArrowButton backButton = new BasicArrowButton(BasicArrowButton.WEST);
+        backButton.setBounds(0, 0, 62, 21);
 		contentPane.add(backButton);
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

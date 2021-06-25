@@ -17,6 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 import adminmenu.AdminMenu;
 import menu.DatabaseManagement;
@@ -75,7 +76,7 @@ public class ViewBook {
         frmBookList.setTitle("Book list");
         frmBookList.setVisible(true);
         frmBookList.setBounds(100, 100, 788, 377);
-        frmBookList.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frmBookList.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frmBookList.getContentPane().setLayout(null);
 
         JScrollPane scrollPane = new JScrollPane();
@@ -140,8 +141,8 @@ public class ViewBook {
         searchButton.setBounds(341, 102, 89, 20);
         panel.add(searchButton);
 
-        JButton backButton = new JButton("Back");
-        backButton.setBounds(0, 0, 70, 23);
+        BasicArrowButton backButton = new BasicArrowButton(BasicArrowButton.WEST);
+        backButton.setBounds(0, 0, 62, 21);
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	frmBookList.dispose();

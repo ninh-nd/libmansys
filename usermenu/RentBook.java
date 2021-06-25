@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableModel;
 
 import net.proteanit.sql.DbUtils;
@@ -81,8 +82,8 @@ public class RentBook extends JFrame {
 		frmBookList.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JButton backButton = new JButton("Back");
-		backButton.setBounds(0, 0, 85, 21);
+        BasicArrowButton backButton = new BasicArrowButton(BasicArrowButton.WEST);
+        backButton.setBounds(0, 0, 62, 21);
 		panel.add(backButton);
 		
 		UserMenu.getUser();

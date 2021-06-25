@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.table.DefaultTableModel;
 
 import adminmenu.AdminMenu;
@@ -88,8 +89,8 @@ public class RenewBook extends JFrame {
         tableModel.addColumn("Select", checkbox);
         table.setModel(tableModel);
         
-        JButton backButton = new JButton("Back");
-        backButton.setBounds(0, 0, 85, 21);
+        BasicArrowButton backButton = new BasicArrowButton(BasicArrowButton.WEST);
+        backButton.setBounds(0, 0, 62, 21);
         panel.add(backButton);
         backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -97,6 +98,7 @@ public class RenewBook extends JFrame {
 				UserMenu.main(null);
 			}
 		});
+        
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

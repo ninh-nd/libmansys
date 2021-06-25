@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -24,128 +25,120 @@ import com.jgoodies.forms.layout.RowSpec;
 import menu.DatabaseManagement;
 import person.Librarian;
 import utilities.ViewBook;
+import java.awt.Rectangle;
 
 public class AddBook {
 
-    private JFrame frmAddBook;
-    private JTextField titleField;
-    private JLabel authorLabel;
-    private JTextField authorField;
-    private JLabel categoryLabel;
-    private JLabel publisherLabel;
-    private JTextField publisherField;
-    private JComboBox<String> categoryField;
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    AddBook window = new AddBook();
-                    window.frmAddBook.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+	private JFrame frmAddBook;
+	private JTextField titleField;
+	private JLabel authorLabel;
+	private JTextField authorField;
+	private JLabel categoryLabel;
+	private JLabel publisherLabel;
+	private JTextField publisherField;
+	private JComboBox<String> categoryField;
 
-    /**
-     * Create the application.
-     */
-    public AddBook() {
-        initialize();
-    }
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AddBook window = new AddBook();
+					window.frmAddBook.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize() {
-        frmAddBook = new JFrame();
-        frmAddBook.setTitle("Add book");
-        frmAddBook.setBounds(100, 100, 450, 300);
-        frmAddBook.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frmAddBook.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
-                FormSpecs.UNRELATED_GAP_COLSPEC,
-                ColumnSpec.decode("81px"),
-                FormSpecs.UNRELATED_GAP_COLSPEC,
-                ColumnSpec.decode("171px"),},
-                new RowSpec[] {
-                        RowSpec.decode("31px"),
-                        RowSpec.decode("20px"),
-                        RowSpec.decode("31px"),
-                        RowSpec.decode("20px"),
-                        RowSpec.decode("34px"),
-                        RowSpec.decode("20px"),
-                        RowSpec.decode("34px"),
-                        RowSpec.decode("20px"),
-                        FormSpecs.UNRELATED_GAP_ROWSPEC,
-                        RowSpec.decode("23px"),}));
+	/**
+	 * Create the application.
+	 */
+	public AddBook() {
+		initialize();
+	}
 
-        JLabel titleLabel = new JLabel("Title");
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        frmAddBook.getContentPane().add(titleLabel, "2, 3, fill, center");
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmAddBook = new JFrame();
+		frmAddBook.setTitle("Add book");
+		frmAddBook.setBounds(100, 100, 450, 300);
+		frmAddBook.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frmAddBook.getContentPane().setLayout(new FormLayout(
+				new ColumnSpec[] { FormSpecs.UNRELATED_GAP_COLSPEC, ColumnSpec.decode("81px"),
+						FormSpecs.UNRELATED_GAP_COLSPEC, ColumnSpec.decode("171px"), },
+				new RowSpec[] { RowSpec.decode("31px"), RowSpec.decode("20px"), RowSpec.decode("31px"),
+						RowSpec.decode("20px"), RowSpec.decode("34px"), RowSpec.decode("20px"), RowSpec.decode("34px"),
+						RowSpec.decode("20px"), FormSpecs.UNRELATED_GAP_ROWSPEC, RowSpec.decode("23px"), }));
 
-        titleField = new JTextField();
-        frmAddBook.getContentPane().add(titleField, "4, 3, fill, top");
-        titleField.setColumns(10);
+		JLabel titleLabel = new JLabel("Title");
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		frmAddBook.getContentPane().add(titleLabel, "2, 3, fill, center");
 
-        authorLabel = new JLabel("Author");
-        authorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        frmAddBook.getContentPane().add(authorLabel, "2, 4, fill, center");
+		titleField = new JTextField();
+		frmAddBook.getContentPane().add(titleField, "4, 3, fill, top");
+		titleField.setColumns(10);
 
-        authorField = new JTextField();
-        frmAddBook.getContentPane().add(authorField, "4, 4, fill, top");
-        authorField.setColumns(10);
+		authorLabel = new JLabel("Author");
+		authorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		frmAddBook.getContentPane().add(authorLabel, "2, 4, fill, center");
 
-        categoryLabel = new JLabel("Category");
-        categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        frmAddBook.getContentPane().add(categoryLabel, "2, 6, center, top");
+		authorField = new JTextField();
+		frmAddBook.getContentPane().add(authorField, "4, 4, fill, top");
+		authorField.setColumns(10);
 
-        Vector<String> categoryList = new Vector<String>();
-        //Getting category list
-        try {
-            String sql = "SELECT cat_name from category";
-            Connection conn = DatabaseManagement.connect();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                categoryList.add(rs.getString("cat_name"));
-            }
-        } catch (SQLException err) {
-            System.out.println(err.getMessage());
-        }
-        categoryField = new JComboBox<String>(categoryList);
-        frmAddBook.getContentPane().add(categoryField, "4, 6, fill, default");
+		categoryLabel = new JLabel("Category");
+		categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		frmAddBook.getContentPane().add(categoryLabel, "2, 6, center, top");
 
+		Vector<String> categoryList = new Vector<String>();
+		// Getting category list
+		try {
+			String sql = "SELECT cat_name from category";
+			Connection conn = DatabaseManagement.connect();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				categoryList.add(rs.getString("cat_name"));
+			}
+		} catch (SQLException err) {
+			System.out.println(err.getMessage());
+		}
+		categoryField = new JComboBox<String>(categoryList);
+		frmAddBook.getContentPane().add(categoryField, "4, 6, fill, default");
 
-        publisherLabel = new JLabel("Publisher");
-        publisherLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        frmAddBook.getContentPane().add(publisherLabel, "2, 8, fill, center");
+		publisherLabel = new JLabel("Publisher");
+		publisherLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		frmAddBook.getContentPane().add(publisherLabel, "2, 8, fill, center");
 
-        publisherField = new JTextField();
-        frmAddBook.getContentPane().add(publisherField, "4, 8, fill, top");
-        publisherField.setColumns(10);
+		publisherField = new JTextField();
+		frmAddBook.getContentPane().add(publisherField, "4, 8, fill, top");
+		publisherField.setColumns(10);
 
-        JButton submitButton = new JButton("Submit");
-        submitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(Librarian.addBook(titleField.getText(), authorField.getText(), categoryField.getSelectedItem().toString(), publisherField.getText())) {
-                    frmAddBook.dispose();
-                    ViewBook.main(null);
-                }
-            }
-        });
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                frmAddBook.dispose();
-              AdminMenu.main(null);
-            }
-        });
-        frmAddBook.getContentPane().add(submitButton, "4, 10, right, top");
-        frmAddBook.getContentPane().add(backButton, "2, 1, left, top");
-        frmAddBook.getRootPane().setDefaultButton(submitButton);
-    }
+		JButton submitButton = new JButton("Submit");
+		submitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (Librarian.addBook(titleField.getText(), authorField.getText(),
+						categoryField.getSelectedItem().toString(), publisherField.getText())) {
+					frmAddBook.dispose();
+					ViewBook.main(null);
+				}
+			}
+		});
+		BasicArrowButton backButton = new BasicArrowButton(BasicArrowButton.WEST);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmAddBook.dispose();
+				AdminMenu.main(null);
+			}
+		});
+		frmAddBook.getContentPane().add(submitButton, "4, 10, right, top");
+		frmAddBook.getContentPane().add(backButton, "2, 1");
+		frmAddBook.getRootPane().setDefaultButton(submitButton);
+	}
 }

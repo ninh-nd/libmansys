@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -19,6 +20,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import menu.Login;
 import person.NormalUser;
+import javax.swing.SwingConstants;
 
 public class ChangeUserPassword extends JFrame {
 
@@ -58,7 +60,7 @@ public class ChangeUserPassword extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 403, 216);
+		panel.setBounds(0, 22, 403, 193);
 		contentPane.add(panel);
 		panel.setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -69,14 +71,6 @@ public class ChangeUserPassword extends JFrame {
 				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("default:grow"),},
 			new RowSpec[] {
@@ -103,8 +97,10 @@ public class ChangeUserPassword extends JFrame {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		
-		backButton = new JButton("Back");
-		panel.add(backButton, "2, 2");
+        BasicArrowButton backButton = new BasicArrowButton(BasicArrowButton.WEST);
+        backButton.setBounds(0, 0, 62, 21);
+		contentPane.add(backButton);
+		
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -113,29 +109,29 @@ public class ChangeUserPassword extends JFrame {
 		});
 		
 		JLabel Old_passwordLabel = new JLabel("Old password");
-		panel.add(Old_passwordLabel, "4, 10");
+		Old_passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(Old_passwordLabel, "4, 4");
 		
 		Old_passwordField = new JPasswordField();
-		panel.add(Old_passwordField, "8, 10, 10, 1, fill, default");
+		panel.add(Old_passwordField, "8, 4, fill, default");
 		
 		New_passwordLabel = new JLabel("New password");
-		panel.add(New_passwordLabel, "4, 16");
+		New_passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(New_passwordLabel, "4, 8");
 		
 		New_passwordField = new JPasswordField();
-		panel.add(New_passwordField, "8, 16, 10, 1, fill, default");
+		panel.add(New_passwordField, "8, 8, fill, default");
 		
 		Confirm_passwordLabel = new JLabel("Confirm new \r\npassword");
-		panel.add(Confirm_passwordLabel, "4, 22");
+		panel.add(Confirm_passwordLabel, "4, 12");
 		
 		Confirm_passwordField = new JPasswordField();
-		panel.add(Confirm_passwordField, "8, 22, 10, 1");
-		
-		JPanel submitpanel = new JPanel();
-		submitpanel.setBounds(0, 215, 403, 38);
-		contentPane.add(submitpanel);
+		panel.add(Confirm_passwordField, "8, 12");
 		
 		JButton SubmitButton = new JButton("Submit");
-		submitpanel.add(SubmitButton);
+		SubmitButton.setSize(110, 28);
+		SubmitButton.setLocation(145, 222);
+		contentPane.add(SubmitButton);
 		SubmitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(NormalUser.changePassword(UserMenu.user, Old_passwordField.getText(), New_passwordField.getText(), Confirm_passwordField.getText())) {
