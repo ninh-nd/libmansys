@@ -97,6 +97,7 @@ public class Register {
 		} else
 			return false;
 	}
+	
 
 	private void registration(String username, String name, String email, String address, String phone, String password, String confirmPassword) {
 		if (username.trim().isEmpty() || email.trim().isEmpty() || address.trim().isEmpty() || phone.trim().isEmpty() || password.trim().isEmpty()
@@ -119,6 +120,10 @@ public class Register {
 					frmRegister.dispose();
 				} catch (SQLException err) {
 					System.out.println(err.getMessage());
+					System.out.println(err.getSQLState());
+					if (err.getSQLState().equals("23514")) {
+						JOptionPane.showMessageDialog(null, "Invalid phone/email format", null, JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		}

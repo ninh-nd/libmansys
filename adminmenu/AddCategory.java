@@ -93,10 +93,10 @@ public class AddCategory extends JFrame {
 		JButton submitButton = new JButton("Submit");
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String category = categoryField.getText();
+				String category = categoryField.getText().toLowerCase().trim();
 				if (!category.isBlank()) {
 					try {
-						String sql = "SELECT cat_name from category WHERE cat_name = ?";
+						String sql = "SELECT cat_name from category WHERE LOWER(cat_name) = ?";
 						Connection conn = DatabaseManagement.connect();
 						PreparedStatement stmt = conn.prepareStatement(sql);
 						stmt.setString(1, category);
@@ -106,17 +106,19 @@ public class AddCategory extends JFrame {
 									JOptionPane.ERROR_MESSAGE);
 						}
 						else {
+							category = category.substring(0, 1).toUpperCase() + category.substring(1);
 							String sql2 = "INSERT INTO category(cat_name) VALUES (?)";
 							PreparedStatement stmt2 = conn.prepareStatement(sql2);
 							stmt2.setString(1, category);
 							stmt2.executeUpdate();
 							JOptionPane.showMessageDialog(null, "Category added", null, JOptionPane.PLAIN_MESSAGE);
+							dispose();
+							AdminMenu.main(null);
 						}
 				} catch (SQLException err) {
 					System.out.println(err.getMessage());
 				}
-					dispose();
-					AdminMenu.main(null);
+					
 				}
 				}
 			});

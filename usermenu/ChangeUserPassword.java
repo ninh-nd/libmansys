@@ -135,6 +135,7 @@ public class ChangeUserPassword extends JFrame {
 		SubmitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(NormalUser.changePassword(UserMenu.user, Old_passwordField.getText(), New_passwordField.getText(), Confirm_passwordField.getText())) {
+					UserMenu.user.setPassword(New_passwordField.getText());
 					dispose();
 					UserMenu.setUser(null);
 					Login.main(null);

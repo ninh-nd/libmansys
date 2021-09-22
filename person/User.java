@@ -7,6 +7,10 @@ public abstract class User {
 
 	private String password;
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	private String name;
 
 	private String email;
@@ -47,6 +51,8 @@ public abstract class User {
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 	}
+
 	public abstract ResultSet viewRentedBooks(User user);
+
 	public abstract ResultSet viewHistory(User user);
 }

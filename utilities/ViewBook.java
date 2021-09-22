@@ -99,7 +99,7 @@ public class ViewBook {
         panel.add(optionPanel);
         optionPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-        JRadioButton searchTitle = new JRadioButton("Search by title");
+        JRadioButton searchTitle = new JRadioButton("Search by title", true);
         optionPanel.add(searchTitle);
 
         JRadioButton searchCategory = new JRadioButton("Search by category");
